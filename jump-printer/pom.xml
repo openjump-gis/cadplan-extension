@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cadplan4openjump</artifactId>
+        <groupId>cadplan</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jump-printer</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.openjump</groupId>
+            <artifactId>OpenJUMP</artifactId>
+            <version>2.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../lib/OpenJUMP-20210412-b68329e.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>cadplan</groupId>
+            <artifactId>vertex-symbols</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.librepdf</groupId>
+            <artifactId>openpdf</artifactId>
+            <version>1.3.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>batik</groupId>
+            <artifactId>batik-awt-util</artifactId>
+            <version>${batik.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>batik</groupId>
+            <artifactId>batik-dom</artifactId>
+            <version>${batik.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>batik</groupId>
+            <artifactId>batik-svggen</artifactId>
+            <version>${batik.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>batik</groupId>
+            <artifactId>batik-squiggle</artifactId>
+            <version>${batik.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
