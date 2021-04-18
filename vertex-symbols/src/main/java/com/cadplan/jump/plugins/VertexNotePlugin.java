@@ -34,8 +34,8 @@ public class VertexNotePlugin extends AbstractPlugIn {
 	}
 
 	@Override
-	public boolean execute(PlugInContext paramPlugInContext) {
-		new VertexSymbolsDialog();
+	public boolean execute(PlugInContext context) {
+		new VertexNoteDialog(context);
 		return true;
 	}
 }
