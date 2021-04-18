@@ -1,7 +1,6 @@
 package com.cadplan.jump.plugins;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
@@ -9,7 +8,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
-import com.vividsolutions.jump.workbench.ui.images.IconLoader;
+import com.cadplan.icon.IconLoader;
 import org.openide.awt.DropDownButtonFactory;
 
 import com.cadplan.jump.utils.LoadSymbolFiles;

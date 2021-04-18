@@ -3,6 +3,7 @@ package com.cadplan.jump.plugins;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.cadplan.icon.IconLoader;
 import com.cadplan.jump.utils.VertexStyler;
 import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.utils.LoadSymbolFiles;
@@ -14,7 +15,6 @@ import com.vividsolutions.jump.workbench.plugin.MultiEnableCheck;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import com.vividsolutions.jump.workbench.ui.GUIUtil;
 import com.vividsolutions.jump.workbench.ui.MenuNames;
-import com.vividsolutions.jump.workbench.ui.images.IconLoader;
 
 public class VertexSymbolsPlugIn extends AbstractPlugIn {
 	public static ImageIcon ICON = IconLoader.icon("vsicon.gif");
