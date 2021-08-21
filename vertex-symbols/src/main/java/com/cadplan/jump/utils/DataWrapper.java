@@ -1,5 +1,6 @@
 package com.cadplan.jump.utils;
 
+
 public class DataWrapper {
 
 	private String symbol = "";

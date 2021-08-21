@@ -3,7 +3,9 @@ package com.cadplan.jump.ui;
 import java.awt.Color;
 import java.awt.image.RGBImageFilter;
 
+
 public class TransparencyFilter extends RGBImageFilter {
+
    int markerRGB;
    int base = 16777215;
    int trans;

@@ -11,7 +11,6 @@ import javax.swing.event.ChangeListener;
 
 import org.openjump.core.ui.plugin.layer.LayerPropertiesPlugIn.PropertyPanel;
 
-import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.ui.ImagePanel;
 import com.cadplan.jump.ui.VectorPanel;
 import com.cadplan.jump.ui.WKTPanel;
@@ -19,6 +18,8 @@ import com.cadplan.jump.utils.VertexParams;
 import com.vividsolutions.jump.I18N;
 
 public class VertexSymbologyPanel extends JTabbedPane implements PropertyPanel, ChangeListener {
+
+	I18N i18n = I18N.getInstance("com.cadplan");
 	private static final long serialVersionUID = 1L;
 	ButtonGroup group;
 	JScrollPane scrollPane;
@@ -38,17 +39,17 @@ public class VertexSymbologyPanel extends JTabbedPane implements PropertyPanel, 
 		this.addChangeListener(this);
 		this.vectorPanel = new VectorPanel(this.group, lineColor, fillColor);
 		this.vectorPanel.setBackground(Color.WHITE);
-		this.addTab(I18NPlug.getI18N("VertexSymbols.Dialog.Vector"), this.vectorPanel);
+		this.addTab(i18n.get("VertexSymbols.Dialog.Vector"), this.vectorPanel);
 		this.wktPanel = new WKTPanel(this.group, lineColor, fillColor);
 		this.wktPanel.setBackground(Color.WHITE);
 		this.scrollPane2 = new JScrollPane(this.wktPanel);
 		this.scrollPane2.setPreferredSize(new Dimension(500, 250));
-		this.addTab(I18NPlug.getI18N("VertexSymbols.Dialog.WKTshapes"), this.scrollPane2);
+		this.addTab(i18n.get("VertexSymbols.Dialog.WKTshapes"), this.scrollPane2);
 		this.imagePanel = new ImagePanel(this.group);
 		this.imagePanel.setBackground(Color.WHITE);
 		this.scrollPane = new JScrollPane(this.imagePanel);
 		//this.scrollPane.setPreferredSize(new Dimension(400, 300));
-		this.addTab(I18NPlug.getI18N("VertexSymbols.Dialog.Image"), this.scrollPane);
+		this.addTab(i18n.get("VertexSymbols.Dialog.Image"), this.scrollPane);
 		this.setValues();
 	}
 
@@ -69,7 +70,7 @@ public class VertexSymbologyPanel extends JTabbedPane implements PropertyPanel, 
 
 	@Override
 	public String getTitle() {
-		return I18N.get("ui.style.RenderingStylePanel.rendering");
+		return I18N.JUMP.get("ui.style.RenderingStylePanel.rendering");
 	}
 
 	@Override

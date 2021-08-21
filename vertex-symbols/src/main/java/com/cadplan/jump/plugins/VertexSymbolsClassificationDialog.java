@@ -22,14 +22,11 @@ import javax.swing.event.ChangeListener;
 
 import org.saig.core.gui.swing.sldeditor.util.FormUtils;
 
-import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.plugins.panel.ColorPanel;
 import com.cadplan.jump.plugins.panel.VertexSymbologyPanel;
 import com.cadplan.jump.utils.VertexParams;
 import com.cadplan.vertices.renderer.style.ExternalSymbolsImplType;
 import com.vividsolutions.jump.I18N;
-import com.vividsolutions.jump.feature.Feature;
-import com.vividsolutions.jump.feature.FeatureDataset;
 import com.vividsolutions.jump.workbench.model.Layer;
 import com.vividsolutions.jump.workbench.ui.GUIUtil;
 import com.vividsolutions.jump.workbench.ui.OKCancelApplyPanel;
@@ -37,6 +34,7 @@ import com.vividsolutions.jump.workbench.ui.renderer.style.BasicStyle;
 
 public class VertexSymbolsClassificationDialog extends JDialog implements ActionListener, ChangeListener {
 
+	private final I18N i18n = I18N.getInstance("com.cadplan");
 	private static final long serialVersionUID = 1L;
 	private final String value;
 	private final ExternalSymbolsImplType style;
@@ -100,8 +98,8 @@ public class VertexSymbolsClassificationDialog extends JDialog implements Action
 
 		symbologyPanel = new VertexSymbologyPanel(this.line, this.inner);
 
-		styleLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.SymbolName"));
-		attribLabel = new JLabel(I18N.get("ui.renderer.style.ColorThemingTableModel.attribute-value") + ": ");
+		styleLabel = new JLabel(i18n.get("VertexSymbols.SymbolName"));
+		attribLabel = new JLabel(I18N.JUMP.get("ui.renderer.style.ColorThemingTableModel.attribute-value") + ": ");
 		styleField = new JTextField();
 		styleField.setMinimumSize(new Dimension(75, 20));
 		styleField.setText( name);
@@ -112,7 +110,7 @@ public class VertexSymbolsClassificationDialog extends JDialog implements Action
 		attribField.setText( value);
 		attribField.setEditable(false);
 
-		sizeLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Size") + ": ");
+		sizeLabel = new JLabel(i18n.get("VertexSymbols.Dialog.Size") + ": ");
 		sizeField = new JFormattedTextField();
 		sizeField.setColumns(5); 
 		sizeField.setValue(dimension);
@@ -149,7 +147,7 @@ public class VertexSymbolsClassificationDialog extends JDialog implements Action
 		FormUtils.addFiller(sizePanel, 0, 4);
 		FormUtils.addRowInGBL(jPanel, 1, 0, sizePanel, true, true);
 		String line ="<html><font color=black size=3>"
-				+ "<b>" + I18NPlug.getI18N("VertexSymbols.Dialog.line-decoration") + "</b></html>";
+				+ "<b>" + i18n.get("VertexSymbols.Dialog.line-decoration") + "</b></html>";
 		lineLabel = new JLabel(line);
 
 		distanceField = new JFormattedTextField();
@@ -157,12 +155,12 @@ public class VertexSymbolsClassificationDialog extends JDialog implements Action
 		distanceField.setColumns(5); 
 		offsetField.setColumns(5); 
 
-		offsetLabel= new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.line-offset") + ": ");
-		distanceLabel= new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.line-distance") + ": ");
-		rotationCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.line-rotate"));
-		rotationCB.setToolTipText(I18NPlug.getI18N("VertexSymbols.Dialog.line-rotate-tooltip"));
-		distanceLabel.setToolTipText(I18NPlug.getI18N("VertexSymbols.Dialog.line-distance-tooltip"));
-		offsetLabel.setToolTipText(I18NPlug.getI18N("VertexSymbols.Dialog.line-offset-tooltip"));
+		offsetLabel= new JLabel(i18n.get("VertexSymbols.Dialog.line-offset") + ": ");
+		distanceLabel= new JLabel(i18n.get("VertexSymbols.Dialog.line-distance") + ": ");
+		rotationCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.line-rotate"));
+		rotationCB.setToolTipText(i18n.get("VertexSymbols.Dialog.line-rotate-tooltip"));
+		distanceLabel.setToolTipText(i18n.get("VertexSymbols.Dialog.line-distance-tooltip"));
+		offsetLabel.setToolTipText(i18n.get("VertexSymbols.Dialog.line-offset-tooltip"));
 
 
 		distanceField.setValue( distance);

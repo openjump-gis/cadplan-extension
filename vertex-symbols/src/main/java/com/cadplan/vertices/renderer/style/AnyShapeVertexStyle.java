@@ -18,7 +18,8 @@ import com.vividsolutions.jump.workbench.ui.GUIUtil;
 import com.vividsolutions.jump.workbench.ui.Viewport;
 import com.vividsolutions.jump.workbench.ui.renderer.style.BasicStyle;
 
-public class AnyShapeVertexStyle extends com.cadplan.vertices.renderer.style.ExternalSymbolsType {
+public class AnyShapeVertexStyle extends ExternalSymbolsType {
+
 	private int type = 0;
 	private Double orientation = 0.0D;
 	private boolean showLine = true;

@@ -1,6 +1,7 @@
 package com.cadplan.jump;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 
 import javax.swing.*;
 
@@ -15,6 +16,9 @@ import java.awt.event.ActionEvent;
  * Copyright 2005 Geoffrey G Roy.
  */
 public class LayerLegendPanel extends JPanel implements ActionListener {
+
+  private final I18N i18n = I18N.getInstance("skyprinter");
+
   LayerLegend legend;
   JLabel titleLabel, fontLabel, layerLabel;
   JCheckBox showCB, borderCB, showTitleCB;
@@ -31,18 +35,17 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
   JRadioButton vertRB, horRB;
   ButtonGroup bgroup;
   int numItems;
-  I18NPlug iPlug;
   String[] styles;
   String[] sizeItems = {"6", "7", "8", "9", "10", "12", "14", "16", "18", "20", "24", "28", "32", "36", "48", "64", "72", "84", "96"};
 
-  public LayerLegendPanel(LayerLegend legend, I18NPlug iPlug) {
+  public LayerLegendPanel(LayerLegend legend) {
     this.legend = legend;
-    this.iPlug = iPlug;
     numItems = legend.legendItems.size();
-    styles = new String[]{iPlug.get("JumpPrinter.Furniture.Title.Plain"),
-        iPlug.get("JumpPrinter.Furniture.Title.PlainItalic"),
-        iPlug.get("JumpPrinter.Furniture.Title.Bold"),
-        iPlug.get("JumpPrinter.Furniture.Title.BoldItalic")};
+    styles = new String[]{
+        i18n.get("JumpPrinter.Furniture.Title.Plain"),
+        i18n.get("JumpPrinter.Furniture.Title.PlainItalic"),
+        i18n.get("JumpPrinter.Furniture.Title.Bold"),
+        i18n.get("JumpPrinter.Furniture.Title.BoldItalic")};
     init();
     setFont();
   }
@@ -101,14 +104,14 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
            gb.addComponent(sizeCombo);
            sizeCombo.setSelectedItem(String.valueOf(legend.size));
 */
-    showCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Show"));
+    showCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Show"));
     gb.setPosition(0, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.setInsets(10, 5, 0, 0);
     gb.addComponent(showCB);
     showCB.setSelected(legend.show);
 
-    titleLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Title.Title"));
+    titleLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Title.Title"));
     gb.setPosition(1, 0);
     gb.setInsets(10, 5, 0, 0);
     gb.addComponent(titleLabel);
@@ -122,7 +125,7 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
     gb.addComponent(titleField);
     titleField.setText(legend.legendName);
 
-    showTitleCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Title.Title"));
+    showTitleCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Title.Title"));
     gb.setPosition(6, 0);
     gb.setInsets(10, 5, 0, 0);
     gb.addComponent(showTitleCB);
@@ -136,7 +139,7 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
     gb.addComponent(titleColorButton);
     titleColorButton.addActionListener(this);
 
-    fontLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Title.Font"));
+    fontLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Title.Font"));
     gb.setPosition(0, 1);
     gb.setInsets(5, 10, 0, 0);
     gb.addComponent(fontLabel);
@@ -173,7 +176,7 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
     gb.addComponent(textColorButton);
     textColorButton.addActionListener(this);
 
-    borderCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Legend.Border"));
+    borderCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Legend.Border"));
     gb.setPosition(6, 2);
     gb.setInsets(5, 0, 0, 0);
     //gb.setWeight(1.0,0.0);
@@ -189,13 +192,13 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
     gb.addComponent(borderColorButton);
     borderColorButton.addActionListener(this);
 
-    checkAllButton = new JButton(iPlug.get("JumpPrinter.Furniture.Legend.CheckAll"));
+    checkAllButton = new JButton(i18n.get("JumpPrinter.Furniture.Legend.CheckAll"));
     gb.setPosition(0, 2);
     gb.setInsets(10, 0, 0, 0);
     gb.addComponent(checkAllButton);
     checkAllButton.addActionListener(this);
 
-    clearAllButton = new JButton(iPlug.get("JumpPrinter.Furniture.Legend.ClearAll"));
+    clearAllButton = new JButton(i18n.get("JumpPrinter.Furniture.Legend.ClearAll"));
     gb.setPosition(1, 2);
     gb.setInsets(10, 0, 0, 0);
     gb.setWeight(0.0, 0.0);
@@ -203,7 +206,7 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
     gb.addComponent(clearAllButton);
     clearAllButton.addActionListener(this);
 
-    layerLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Layer"));
+    layerLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Layer"));
     gb.setPosition(2, 2);
     gb.setInsets(10, 10, 10, 0);
     gb.addComponent(layerLabel);
@@ -215,13 +218,13 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
     gb.addComponent(layerField);
     layerField.setText(String.valueOf(legend.layerNumber));
 
-    vertRB = new JRadioButton(iPlug.get("JumpPrinter.Furniture.Vertical"));
+    vertRB = new JRadioButton(i18n.get("JumpPrinter.Furniture.Vertical"));
     gb.setPosition(4, 2);
     gb.setInsets(0, 0, 0, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(vertRB);
 
-    horRB = new JRadioButton(iPlug.get("JumpPrinter.Furniture.Horizontal"));
+    horRB = new JRadioButton(i18n.get("JumpPrinter.Furniture.Horizontal"));
     gb.setPosition(5, 2);
     gb.setInsets(0, 0, 0, 10);
     gb.setAnchor(GridBagConstraints.WEST);
@@ -285,8 +288,9 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
     try {
       legend.layerNumber = Integer.parseInt(layerField.getText());
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Message2") + ": " + layerField.getText(),
-          iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.Message2") + ": " + layerField.getText(),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
     }
     for (int i = 0; i < numItems; i++) {
       LegendElement item = legend.legendItems.elementAt(i);
@@ -298,18 +302,18 @@ public class LayerLegendPanel extends JPanel implements ActionListener {
 
   private String styleString(int style) {
     String s;
-    if (style == Font.PLAIN) s = iPlug.get("JumpPrinter.Furniture.Title.Plain");
-    else if (style == Font.BOLD) s = iPlug.get("JumpPrinter.Furniture.Title.Bold");
-    else if (style == (Font.PLAIN + Font.ITALIC)) s = iPlug.get("JumpPrinter.Furniture.Title.PlainItalic");
-    else s = iPlug.get("JumpPrinter.Furniture.Title.BoldItalic");
+    if (style == Font.PLAIN) s = i18n.get("JumpPrinter.Furniture.Title.Plain");
+    else if (style == Font.BOLD) s = i18n.get("JumpPrinter.Furniture.Title.Bold");
+    else if (style == (Font.PLAIN + Font.ITALIC)) s = i18n.get("JumpPrinter.Furniture.Title.PlainItalic");
+    else s = i18n.get("JumpPrinter.Furniture.Title.BoldItalic");
     return s;
   }
 
   private int styleNumber(String style) {
     int n;
-    if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.Plain"))) n = Font.PLAIN;
-    else if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.Bold"))) n = Font.BOLD;
-    else if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.PlainItalic"))) n = (Font.PLAIN + Font.ITALIC);
+    if (style.equals(i18n.get("JumpPrinter.Furniture.Title.Plain"))) n = Font.PLAIN;
+    else if (style.equals(i18n.get("JumpPrinter.Furniture.Title.Bold"))) n = Font.BOLD;
+    else if (style.equals(i18n.get("JumpPrinter.Furniture.Title.PlainItalic"))) n = (Font.PLAIN + Font.ITALIC);
     else n = (Font.BOLD + Font.ITALIC);
 
     return n;

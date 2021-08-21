@@ -21,6 +21,7 @@ import com.vividsolutions.jump.workbench.ui.renderer.style.BasicStyle;
 import com.vividsolutions.jump.workbench.ui.renderer.style.ColorThemingStyle;
 
 public class WKTVertexStyle extends ExternalSymbolsType {
+
 	public WKTshape wktShape;
 	private String name;
 	private int width;

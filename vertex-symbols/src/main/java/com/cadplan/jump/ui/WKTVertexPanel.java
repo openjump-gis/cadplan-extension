@@ -30,6 +30,7 @@ import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.Assert;
 
 public class WKTVertexPanel extends JPanel {
+
 	VertexStyle symbol;
 	private Color color;
 	private static final long serialVersionUID = 1L;

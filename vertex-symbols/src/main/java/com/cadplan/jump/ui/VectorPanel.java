@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 
 public class VectorPanel extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 	public SymbolPanel symbolPanel;
 	ButtonGroup group;

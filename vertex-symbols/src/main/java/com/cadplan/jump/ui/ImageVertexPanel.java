@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import com.cadplan.vertices.renderer.style.ImageVertexStyle;
 import com.vividsolutions.jump.workbench.ui.renderer.style.VertexStyle;
 
+
 public class ImageVertexPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

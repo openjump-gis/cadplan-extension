@@ -22,6 +22,7 @@
 package com.cadplan.jump;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 
 import javax.swing.*;
 
@@ -34,6 +35,9 @@ import java.awt.*;
  * Copyright 2005 Geoffrey G Roy.
  */
 public class FurnitureTitlePanel extends JPanel {
+
+  private final I18N i18n = I18N.getInstance("skyprinter");
+
   FurnitureTitle title;
   JTextField textField, layerField;
   JComboBox<String> fontNameCombo, fontSizeCombo, fontStyleCombo;
@@ -42,28 +46,27 @@ public class FurnitureTitlePanel extends JPanel {
   ColorButton colorButton;
   String[] styles;
   String[] sizes = {"6", "7", "8", "9", "10", "12", "14", "16", "18", "20", "24", "28", "32", "36", "48", "64", "72", "84", "96", "108", "120", "132", "144", "156"};
-  I18NPlug iPlug;
 
-  public FurnitureTitlePanel(FurnitureTitle title, I18NPlug iPlug) {
+  public FurnitureTitlePanel(FurnitureTitle title) {
     this.title = title;
-    this.iPlug = iPlug;
-    styles = new String[]{iPlug.get("JumpPrinter.Furniture.Title.Plain"),
-        iPlug.get("JumpPrinter.Furniture.Title.PlainItalic"),
-        iPlug.get("JumpPrinter.Furniture.Title.Bold"),
-        iPlug.get("JumpPrinter.Furniture.Title.BoldItalic")};
+    styles = new String[]{
+        i18n.get("JumpPrinter.Furniture.Title.Plain"),
+        i18n.get("JumpPrinter.Furniture.Title.PlainItalic"),
+        i18n.get("JumpPrinter.Furniture.Title.Bold"),
+        i18n.get("JumpPrinter.Furniture.Title.BoldItalic")};
     init();
   }
 
   public void init() {
     GridBagDesigner gb = new GridBagDesigner(this);
 
-    showCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Show"));
+    showCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Show"));
     gb.setPosition(0, 0);
     gb.setInsets(10, 10, 0, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(showCB);
 
-    textLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Title.Title"));
+    textLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Title.Title"));
     gb.setPosition(1, 0);
     gb.setInsets(10, 10, 0, 0);
     gb.addComponent(textLabel);
@@ -76,7 +79,7 @@ public class FurnitureTitlePanel extends JPanel {
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(textField);
 
-    fontLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Title.Font"));
+    fontLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Title.Font"));
     gb.setPosition(1, 1);
     gb.setInsets(10, 10, 0, 0);
     gb.addComponent(fontLabel);
@@ -118,7 +121,7 @@ public class FurnitureTitlePanel extends JPanel {
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(colorButton);
 
-    layerLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Layer"));
+    layerLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Layer"));
     gb.setPosition(1, 2);
     gb.setInsets(10, 10, 0, 0);
     gb.addComponent(layerLabel);
@@ -152,8 +155,9 @@ public class FurnitureTitlePanel extends JPanel {
     try {
       title.layerNumber = Integer.parseInt(layerField.getText());
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Message2") + ": " + layerField.getText(),
-          iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.Message2") + ": " + layerField.getText(),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
     }
     return title;
   }
@@ -161,18 +165,18 @@ public class FurnitureTitlePanel extends JPanel {
 
   private String styleString(int style) {
     String s;
-    if (style == Font.PLAIN) s = iPlug.get("JumpPrinter.Furniture.Title.Plain");
-    else if (style == Font.BOLD) s = iPlug.get("JumpPrinter.Furniture.Title.Bold");
-    else if (style == (Font.PLAIN + Font.ITALIC)) s = iPlug.get("JumpPrinter.Furniture.Title.PlainItalic");
-    else s = iPlug.get("JumpPrinter.Furniture.Title.BoldItalic");
+    if (style == Font.PLAIN) s = i18n.get("JumpPrinter.Furniture.Title.Plain");
+    else if (style == Font.BOLD) s = i18n.get("JumpPrinter.Furniture.Title.Bold");
+    else if (style == (Font.PLAIN + Font.ITALIC)) s = i18n.get("JumpPrinter.Furniture.Title.PlainItalic");
+    else s = i18n.get("JumpPrinter.Furniture.Title.BoldItalic");
     return s;
   }
 
   private int styleNumber(String style) {
     int n;
-    if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.Plain"))) n = Font.PLAIN;
-    else if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.Bold"))) n = Font.BOLD;
-    else if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.PlainItalic"))) n = (Font.PLAIN + Font.ITALIC);
+    if (style.equals(i18n.get("JumpPrinter.Furniture.Title.Plain"))) n = Font.PLAIN;
+    else if (style.equals(i18n.get("JumpPrinter.Furniture.Title.Bold"))) n = Font.BOLD;
+    else if (style.equals(i18n.get("JumpPrinter.Furniture.Title.PlainItalic"))) n = (Font.PLAIN + Font.ITALIC);
     else n = (Font.BOLD + Font.ITALIC);
 
     return n;

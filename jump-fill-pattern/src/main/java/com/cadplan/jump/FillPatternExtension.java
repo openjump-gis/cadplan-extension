@@ -33,7 +33,7 @@ import com.vividsolutions.jump.workbench.plugin.PlugInContext;
  */
 public class FillPatternExtension extends Extension
 {
-    public void configure(PlugInContext context) throws Exception
+    public void configure(PlugInContext context)
     {
         new FillPatternPlugIn().initialize(context);
     }

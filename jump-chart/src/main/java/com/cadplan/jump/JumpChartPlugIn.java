@@ -25,27 +25,27 @@ package com.cadplan.jump;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.plugin.AbstractPlugIn;
-import com.vividsolutions.jump.workbench.plugin.EnableCheckFactory;
 import com.vividsolutions.jump.workbench.plugin.MultiEnableCheck;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import com.vividsolutions.jump.workbench.ui.MenuNames;
+
+import java.util.Objects;
 
 /**
  * User: geoff Date: 28/04/2007 Time: 09:40:22 Copyright 2007 Geoffrey G Roy.
  */
 public class JumpChartPlugIn extends AbstractPlugIn {
-    private I18NPlug iPlug;
+
+    private final I18N i18n = I18N.getInstance("jump_chart");
 
     @Override
-    public void initialize(PlugInContext context) throws Exception {
-        iPlug = new I18NPlug("JumpChart", "language.JumpChartPlugin");
-        ChartParams.setNames(iPlug);
-        final EnableCheckFactory check = new EnableCheckFactory(
-                context.getWorkbenchContext());
+    public void initialize(PlugInContext context) {
+        ChartParams.setNames(i18n);
         final MultiEnableCheck mcheck = new MultiEnableCheck();
-        final String menuName = MenuNames.PLUGINS; // iPlug.get("JumpChart.MenuName");
-        final String menuItem = iPlug.get("JumpChart.MenuItem");
+        final String menuName = MenuNames.PLUGINS;
+        final String menuItem = i18n.get("JumpChart.MenuItem");
         context.getFeatureInstaller().addMainMenuPlugin(this,
                 new String[] { menuName }, menuItem, false, getIcon(), mcheck);
         context.getWorkbenchFrame()
@@ -55,21 +55,18 @@ public class JumpChartPlugIn extends AbstractPlugIn {
     }
 
     public Icon getIcon() {
-        return new ImageIcon(getClass().getResource("charticon.gif"));
+        return new ImageIcon(Objects.requireNonNull(getClass().getResource("charticon.gif")));
     }
 
     @Override
     public String getName() {
-        iPlug = new I18NPlug("JumpChart", "language.JumpChartPlugin");
-        return iPlug.get("JumpChart.MenuItem");
+        return i18n.get("JumpChart.MenuItem");
     }
 
     @Override
-    public boolean execute(PlugInContext context) throws Exception {
-        final Chart chart = new Chart(context, iPlug);
-
+    public boolean execute(PlugInContext context) {
+        final Chart chart = new Chart(context, i18n);
         return true;
-
     }
 
 }

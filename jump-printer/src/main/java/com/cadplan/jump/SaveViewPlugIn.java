@@ -56,6 +56,7 @@ import com.vividsolutions.jump.workbench.ui.plugin.PersistentBlackboardPlugIn;
  * The exported image can have a size different from the original view.
  */
 public class SaveViewPlugIn extends ThreadedBasePlugIn {
+
 	//ImageIO doesn't know about the "gif" format. I guess it's a copyright
 	// issue [Jon Aquino 11/6/2003]
 	//Don't use TYPE_INT_ARGB for jpegs -- they will turn pink [Jon Aquino
@@ -65,6 +66,7 @@ public class SaveViewPlugIn extends ThreadedBasePlugIn {
 	//Extended capability to export to SVG and PDF and 
 	//to save images at defined scales. [Giuseppe Aruta 2020-06-07]
 
+	private static final I18N i18n = I18N.getInstance("skyprinter");
 	private List<MyFileFilter> myFileFilters;
 
 	private JFileChooser fileChooser = null;
@@ -108,11 +110,10 @@ public class SaveViewPlugIn extends ThreadedBasePlugIn {
 
 	@Override
 	public String getName() {
-		return I18N.get("ui.MenuNames.FILE.SAVEVIEW");
+		return I18N.JUMP.get("ui.MenuNames.FILE.SAVEVIEW");
 	}
 
 	double oldHorizontalScale;
-
 
 	private JFileChooser getFileChooser() {
 		if (fileChooser == null) {
@@ -151,8 +152,8 @@ public class SaveViewPlugIn extends ThreadedBasePlugIn {
 			buttonGroup.add(perScale);
 			perScale.setSelected(true);
 			pixelSizeField.setEnabled(false);
-			perLength.setText(I18N.get("ui.plugin.SaveImageAsPlugIn.width-in-pixels"));
-			perScale.setText(I18N.get("ui.WorkbenchFrame.scale")+" 1:");
+			perLength.setText(I18N.JUMP.get("ui.plugin.SaveImageAsPlugIn.width-in-pixels"));
+			perScale.setText(I18N.JUMP.get("ui.WorkbenchFrame.scale")+" 1:");
 			scaleField = new JFormattedTextField();
 			Viewport port = wContext.getLayerViewPanel().getViewport();
 			oldHorizontalScale = ScreenScale.getHorizontalMapScale(port);
@@ -160,14 +161,14 @@ public class SaveViewPlugIn extends ThreadedBasePlugIn {
 			Box box = new Box(BoxLayout.Y_AXIS);
 			JPanel jPanelSize = new JPanel(new GridBagLayout());
 			String size ="<html><font color=black size=3>"
-					+ "<b>" + I18N.get("org.openjump.core.ui.plugin.raster.RasterImageLayerPropertiesPlugIn.dimension")+ "</b></html>";
-			I18N.get("org.openjump.core.ui.plugin.raster.RasterImageLayerPropertiesPlugIn.dimension");
+					+ "<b>" + I18N.JUMP.get("org.openjump.core.ui.plugin.raster.RasterImageLayerPropertiesPlugIn.dimension")+ "</b></html>";
+			I18N.JUMP.get("org.openjump.core.ui.plugin.raster.RasterImageLayerPropertiesPlugIn.dimension");
 			FormUtils.addRowInGBL(jPanelSize, 0, 0, new JLabel(size),true,true);
 			FormUtils.addRowInGBL(jPanelSize, 1, 0, perScale,scaleField );
 			FormUtils.addRowInGBL(jPanelSize, 2, 0, perLength,pixelSizeField );
 			JPanel jPanelWF   = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			worldFileCheckBox = new javax.swing.JCheckBox();
-			worldFileCheckBox.setText(I18N.get("ui.plugin.SaveImageAsPlugIn.write-world-file"));
+			worldFileCheckBox.setText(I18N.JUMP.get("ui.plugin.SaveImageAsPlugIn.write-world-file"));
 			if (fence != null){
 				JLabel fenceIcon = new JLabel(icon);
 				FormUtils.addRowInGBL(jPanelSize, 3, 0, fenceIcon, true, true);
@@ -268,19 +269,17 @@ public class SaveViewPlugIn extends ThreadedBasePlugIn {
 		}
 	}
 
-	I18NPlug iPlug;
 	private static final String FORMAT_KEY = "FORMAT";
 	private static final String LAST_FILENAME_KEY = "LAST FILENAME";
 
 	@Override
 	public void initialize(PlugInContext context) throws Exception {
 		super.initialize(context);
-		iPlug = new I18NPlug("JumpPrinter","language.JumpPrinterPlugin");
-		SaveViewUtils.removeMenu(new String[] {
+		SaveViewUtils.removeMenu(context, new String[] {
 				MenuNames.FILE, MenuNames.FILE_SAVEVIEW });
 		context.getFeatureInstaller().addMainMenuPlugin(this, new String[] {
 				MenuNames.FILE, MenuNames.FILE_SAVEVIEW },
-				iPlug.get("JumpPrinter.Setup.SaveImage"),false,getIcon(),
+				i18n.get("JumpPrinter.Setup.SaveImage"),false,getIcon(),
 				createEnableCheck(context.getWorkbenchContext()), 9);
 	}
 
@@ -336,7 +335,7 @@ public class SaveViewPlugIn extends ThreadedBasePlugIn {
 	@Override
 	public void run(TaskMonitor monitor, PlugInContext context) throws Exception {
 		monitor.allowCancellationRequests();
-		monitor.report(I18N.get("ui.plugin.SaveDatasetAsPlugIn.saving"));
+		monitor.report(I18N.JUMP.get("ui.plugin.SaveDatasetAsPlugIn.saving"));
 		MyFileFilter fileFilter = (MyFileFilter) getFileChooser().getFileFilter();
 		BufferedImage image;
 		LayerViewPanel viewPanel = context.getLayerViewPanel();
@@ -352,7 +351,7 @@ public class SaveViewPlugIn extends ThreadedBasePlugIn {
 			if (fenceFound)
 			{
 				envelope = fence.getEnvelopeInternal(); 
-				String fenceLayerName = I18N.get("model.FenceLayerFinder.fence");
+				String fenceLayerName = I18N.JUMP.get("model.FenceLayerFinder.fence");
 				Layer fenceLayer = workbenchContext.getLayerableNamePanel()
 						.getLayerManager().getLayer(fenceLayerName);
 				fenceLayer.setVisible(false);
@@ -394,14 +393,16 @@ public class SaveViewPlugIn extends ThreadedBasePlugIn {
 		if ((worldFileCheckBox != null) && (worldFileCheckBox.isSelected()))
 			WorldFileWriter.writeWorldFile( imageFile,  viewPanel );
 		fileChooser = null; 
-		workbenchContext.getWorkbench().getFrame().setStatusMessage(I18N.get("org.openjump.core.ui.plugin.raster.RasterImageLayerPropertiesPlugIn.file.saved"));
+		workbenchContext.getWorkbench().getFrame().setStatusMessage(I18N.JUMP.get("org.openjump.core.ui.plugin.raster.RasterImageLayerPropertiesPlugIn.file.saved"));
 
 
 	}
 
 	public static MultiEnableCheck createEnableCheck(WorkbenchContext workbenchContext) {
-		EnableCheckFactory checkFactory = new EnableCheckFactory(workbenchContext);
-		return new MultiEnableCheck().add(checkFactory.createTaskWindowMustBeActiveCheck()).add(checkFactory.createAtLeastNLayerablesMustExistCheck(1));
+		EnableCheckFactory checkFactory =
+				workbenchContext.createPlugInContext().getCheckFactory();
+		return new MultiEnableCheck().add(checkFactory.createTaskWindowMustBeActiveCheck())
+				.add(checkFactory.createAtLeastNLayerablesMustExistCheck(1));
 	}
 
 

@@ -5,8 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-public class FurnitureImage extends Furniture
-{
+
+public class FurnitureImage extends Furniture {
+
 	Image image;
 	int dragSize = 10;
 	String fileName;

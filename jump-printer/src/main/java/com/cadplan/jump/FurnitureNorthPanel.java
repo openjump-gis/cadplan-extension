@@ -22,6 +22,7 @@
 package com.cadplan.jump;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 
 import javax.swing.*;
 
@@ -38,6 +39,9 @@ import java.awt.event.ItemEvent;
  * Copyright 2005 Geoffrey G Roy.
  */
 public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionListener {
+
+  private final I18N i18n = I18N.getInstance("skyprinter");
+
   FurnitureNorth north;
   JCheckBox showCB;
   NorthPanel imagePanel;
@@ -46,11 +50,9 @@ public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionL
   Button colorButton;
   JLabel rotationLabel, sizeLabel, layerLabel;
   JTextField rotationField, sizeField, layerField;
-  I18NPlug iPlug;
 
-  public FurnitureNorthPanel(FurnitureNorth north, I18NPlug iPlug) {
+  public FurnitureNorthPanel(FurnitureNorth north) {
     this.north = north;
-    this.iPlug = iPlug;
     init();
     setNorth();
   }
@@ -59,13 +61,13 @@ public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionL
   public void init() {
     GridBagDesigner gb = new GridBagDesigner(this);
 
-    showCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Show"));
+    showCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Show"));
     gb.setPosition(0, 0);
     gb.setInsets(12, 10, 10, 10);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(showCB);
 
-    rotationLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.North.Rotation"));
+    rotationLabel = new JLabel(i18n.get("JumpPrinter.Furniture.North.Rotation"));
     gb.setPosition(1, 0);
     gb.setInsets(10, 0, 0, 10);
     gb.setAnchor(GridBagConstraints.EAST);
@@ -85,7 +87,7 @@ public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionL
     gb.addComponent(colorButton);
     colorButton.addActionListener(this);
 
-    sizeLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Note.Size"));
+    sizeLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Note.Size"));
     gb.setPosition(4, 0);
     gb.setInsets(10, 0, 0, 5);
     gb.setAnchor(GridBagConstraints.EAST);
@@ -97,7 +99,7 @@ public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionL
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(sizeField);
 
-    layerLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Layer"));
+    layerLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Layer"));
     gb.setPosition(6, 0);
     gb.setInsets(10, 0, 0, 5);
     gb.setAnchor(GridBagConstraints.EAST);
@@ -112,40 +114,40 @@ public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionL
     gb.addComponent(layerField);
 
 
-    style1RB = new JRadioButton(iPlug.get("JumpPrinter.Furniture.North.Style1"));
+    style1RB = new JRadioButton(i18n.get("JumpPrinter.Furniture.North.Style1"));
     gb.setPosition(0, 1);
     gb.setInsets(10, 10, 10, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(style1RB);
 
-    style2RB = new JRadioButton(iPlug.get("JumpPrinter.Furniture.North.Style2"));
+    style2RB = new JRadioButton(i18n.get("JumpPrinter.Furniture.North.Style2"));
     gb.setPosition(1, 1);
     gb.setInsets(10, 10, 10, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(style2RB);
 
-    style3RB = new JRadioButton(iPlug.get("JumpPrinter.Furniture.North.Style3"));
+    style3RB = new JRadioButton(i18n.get("JumpPrinter.Furniture.North.Style3"));
     gb.setPosition(2, 1);
     gb.setInsets(10, 10, 10, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.setWeight(0.0, 0.0);
     gb.addComponent(style3RB);
 
-    style4RB = new JRadioButton(iPlug.get("JumpPrinter.Furniture.North.Style4"));
+    style4RB = new JRadioButton(i18n.get("JumpPrinter.Furniture.North.Style4"));
     gb.setPosition(3, 1);
     gb.setInsets(10, 10, 10, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.setWeight(0.0, 0.0);
     gb.addComponent(style4RB);
 
-    style5RB = new JRadioButton(iPlug.get("JumpPrinter.Furniture.North.Style5"));
+    style5RB = new JRadioButton(i18n.get("JumpPrinter.Furniture.North.Style5"));
     gb.setPosition(4, 1);
     gb.setInsets(10, 10, 10, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.setWeight(0.0, 0.0);
     gb.addComponent(style5RB);
 
-    style6RB = new JRadioButton(iPlug.get("JumpPrinter.Furniture.North.Style6"));
+    style6RB = new JRadioButton(i18n.get("JumpPrinter.Furniture.North.Style6"));
     gb.setPosition(5, 1);
     gb.setInsets(10, 10, 10, 0);
     gb.setAnchor(GridBagConstraints.WEST);
@@ -211,8 +213,9 @@ public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionL
     try {
       north.layerNumber = Integer.parseInt(layerField.getText());
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Message2") + ": " + layerField.getText(),
-          iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.Message2") + ": " + layerField.getText(),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
 
     }
 
@@ -220,7 +223,9 @@ public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionL
       rot = Double.parseDouble(rotationField.getText());
       north.rotation = rot;
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.North.Message1"), iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.North.Message1"),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
 
     }
     try {
@@ -228,11 +233,15 @@ public class FurnitureNorthPanel extends JPanel implements ItemListener, ActionL
       if (size > 0.1 && size <= 10.0) {
         north.sizeFactor = size;
       } else {
-        JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Message1"), iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,
+            i18n.get("JumpPrinter.Furniture.Message1"),
+            i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
 
       }
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Message1"), iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.Message1"),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
 
     }
 

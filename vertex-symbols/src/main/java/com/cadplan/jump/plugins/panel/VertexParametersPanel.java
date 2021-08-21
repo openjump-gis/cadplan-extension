@@ -12,18 +12,20 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.ui.plugin.layer.LayerPropertiesPlugIn.PropertyPanel;
 import org.saig.core.gui.swing.sldeditor.util.FormUtils;
 
-import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.utils.StyleUtils;
 import com.cadplan.jump.utils.VertexParams;
 import com.cadplan.jump.utils.VertexStyler;
 import com.vividsolutions.jump.feature.AttributeType;
 import com.vividsolutions.jump.feature.FeatureSchema;
 
+
 public class VertexParametersPanel extends JPanel implements PropertyPanel {
 
+	I18N i18n = I18N.getInstance("com.cadplan");
 	public JLabel sizeLabel, orienLabel,  baseScaleLabel, lineLabel;
 	public JTextField sizeField, orienField, baseScaleField;
 	public JCheckBox showLineCB, showFillCB, dottedCB, sizeByScaleCB;
@@ -44,23 +46,23 @@ public class VertexParametersPanel extends JPanel implements PropertyPanel {
 	public VertexParametersPanel() {
 		this.setLayout(new GridBagLayout());
 
-		this.styleLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.SymbolName"));
+		this.styleLabel = new JLabel(i18n.get("VertexSymbols.SymbolName"));
 		this.styleField = new JTextField();
 		this.styleField.setMinimumSize(new Dimension(75, 20));
 		this.styleField.setEditable(false);
-		this.showLineCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.ShowLine"));
-		this.showFillCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.ShowFill"));
-		this.dottedCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.Dotted"));
+		this.showLineCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.ShowLine"));
+		this.showFillCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.ShowFill"));
+		this.dottedCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.Dotted"));
 		FormUtils.addRowInGBL(this, 0, 0, this.styleLabel, this.styleField, false);
 		FormUtils.addRowInGBL(this, 0, 2, this.dottedCB,  this.showLineCB, false);
 		FormUtils.addRowInGBL(this, 0, 4,  this.showFillCB);
 
 
 
-		this.orienLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Orientation") + ": ");
-		this.absValueRB = new JRadioButton(I18NPlug.getI18N("VertexSymbols.Dialog.ByValue"));
+		this.orienLabel = new JLabel(i18n.get("VertexSymbols.Dialog.Orientation") + ": ");
+		this.absValueRB = new JRadioButton(i18n.get("VertexSymbols.Dialog.ByValue"));
 		this.orienField = StyleUtils.doubleField(5);
-		this.byAttributeRB = new JRadioButton(I18NPlug.getI18N("VertexSymbols.Dialog.ByAttribute"));
+		this.byAttributeRB = new JRadioButton(i18n.get("VertexSymbols.Dialog.ByAttribute"));
 		this.rotateGroup = new ButtonGroup();
 		this.rotateGroup.add(this.absValueRB);
 		this.rotateGroup.add(this.byAttributeRB);
@@ -69,27 +71,27 @@ public class VertexParametersPanel extends JPanel implements PropertyPanel {
 		FormUtils.addRowInGBL(this, 2, 0, this.orienLabel, this.absValueRB, false);
 		FormUtils.addRowInGBL(this, 2, 2, this.orienField, this.byAttributeRB, false);
 		FormUtils.addRowInGBL(this, 2, 4, this.attributeCB);
-		this.sizeLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Size") + ": ");
+		this.sizeLabel = new JLabel(i18n.get("VertexSymbols.Dialog.Size") + ": ");
 		this.sizeField = StyleUtils.integerField(5);
-		this.baseScaleLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.BaseScale") + ": ");
+		this.baseScaleLabel = new JLabel(i18n.get("VertexSymbols.Dialog.BaseScale") + ": ");
 		this.baseScaleField = StyleUtils.doubleField(5);
 		this.baseScaleField.setText(String.valueOf(VertexParams.baseScale));
-		this.sizeByScaleCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.SizeByScale"));
+		this.sizeByScaleCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.SizeByScale"));
 		this.sizeByScaleCB.setSelected(VertexParams.sizeByScale);
 		FormUtils.addRowInGBL(this, 1, 0, this.sizeLabel, this.sizeField, false);
 		FormUtils.addRowInGBL(this, 1, 2, this.baseScaleLabel, this.baseScaleField, false);
 		FormUtils.addRowInGBL(this, 1, 4, this.sizeByScaleCB);
 
 		String line ="<html><font color=black size=3>"
-				+ "<b>" + I18NPlug.getI18N("VertexSymbols.Dialog.line-decoration") + "</b></html>";
+				+ "<b>" + i18n.get("VertexSymbols.Dialog.line-decoration") + "</b></html>";
 		this.lineLabel = new JLabel(line);
 		this.distanceField = new JFormattedTextField();
 		this.offsetField = new JFormattedTextField();
 		this.distanceField.setColumns(5); 
 		this.offsetField.setColumns(5); 
-		this.offsetLabel= new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.line-offset") + ": ");
-		this.distanceLabel= new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.line-distance") + ": ");
-		this.rotationCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.line-rotate"));
+		this.offsetLabel= new JLabel(i18n.get("VertexSymbols.Dialog.line-offset") + ": ");
+		this.distanceLabel= new JLabel(i18n.get("VertexSymbols.Dialog.line-distance") + ": ");
+		this.rotationCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.line-rotate"));
 		lineLabel.setEnabled(VertexParams.lineDecoration);
 		distanceField.setEnabled(VertexParams.lineDecoration);
 		offsetField.setEnabled(VertexParams.lineDecoration);
@@ -122,16 +124,16 @@ public class VertexParametersPanel extends JPanel implements PropertyPanel {
 		offsetField.setValue(VertexParams.offset);
 		rotationCB.setSelected(VertexParams.rotate);
 
-		String rotationTooltip = StyleUtils.getName(I18NPlug.getI18N("VertexSymbols.Dialog.line-rotate"), 
-				I18NPlug.getI18N("VertexSymbols.Dialog.line-rotate-tooltip"));
+		String rotationTooltip = StyleUtils.getName(i18n.get("VertexSymbols.Dialog.line-rotate"),
+				i18n.get("VertexSymbols.Dialog.line-rotate-tooltip"));
 		rotationCB.setToolTipText(rotationTooltip);
 
-		String distanceTooltip = StyleUtils.getName(I18NPlug.getI18N("VertexSymbols.Dialog.line-distance"), 
-				I18NPlug.getI18N("VertexSymbols.Dialog.line-distance-tooltip"));
+		String distanceTooltip = StyleUtils.getName(i18n.get("VertexSymbols.Dialog.line-distance"),
+				i18n.get("VertexSymbols.Dialog.line-distance-tooltip"));
 		distanceLabel.setToolTipText(distanceTooltip);
 
-		String offsetTooltip = StyleUtils.getName(I18NPlug.getI18N("VertexSymbols.Dialog.line-offset"), 
-				I18NPlug.getI18N("VertexSymbols.Dialog.line-offset-tooltip"));
+		String offsetTooltip = StyleUtils.getName(i18n.get("VertexSymbols.Dialog.line-offset"),
+				i18n.get("VertexSymbols.Dialog.line-offset-tooltip"));
 		offsetLabel.setToolTipText(offsetTooltip);
 		bool = false;
 		if (VertexParams.singleLayer && VertexParams.selectedLayer != null) {

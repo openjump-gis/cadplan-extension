@@ -50,7 +50,7 @@ public class StylerMenuPlugIn extends AbstractPlugIn {
     context.getWorkbenchContext().getWorkbench().getFrame().getToolBar().add(toolbarButton);
 
 
-    EnableCheckFactory enableCheckFactory = new EnableCheckFactory(context.getWorkbenchContext());
+    EnableCheckFactory enableCheckFactory = context.getCheckFactory();
     MultiEnableCheck multiEnableCheck = new MultiEnableCheck();
     multiEnableCheck.add(enableCheckFactory.createWindowWithLayerViewPanelMustBeActiveCheck());
     multiEnableCheck.add(enableCheckFactory.createAtLeastNLayersMustExistCheck(1));

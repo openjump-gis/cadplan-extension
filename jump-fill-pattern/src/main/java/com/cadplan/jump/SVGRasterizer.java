@@ -91,14 +91,6 @@ public class SVGRasterizer {
         this.input = new TranscoderInput(reader);
     }
 
-    /**
-     * Constructs a new SVGRasterizer converter.
-     *
-     * @param document the SVG document to rasterize
-     */
-//    public SVGRasterizer(SVGDocument document) {
-//        this.input = new TranscoderInput(document);
-//    }
 
     /**
      * Returns the image that represents the SVG document.

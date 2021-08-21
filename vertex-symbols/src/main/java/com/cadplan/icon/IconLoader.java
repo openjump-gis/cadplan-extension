@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import javax.swing.ImageIcon;
 
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.Logger;
-import org.saig.jump.lang.I18N;
 
 public class IconLoader {
    public static final ImageIcon DEFAULT_UNKNOW_ICON =
@@ -21,7 +21,7 @@ public class IconLoader {
       URL urlIcon = IconLoader.class.getResource(filename);
       if (urlIcon == null) {
          if (useDefaultForNull) {
-            Logger.warn(I18N.getMessage("com.vividsolutions.com.cadplan.jump.workbench.com.cadplan.jump.ui.images.IconLoader.The-icon-{0}-has-not-been-found-default-icon-will-be-used", new Object[]{filename}));
+            Logger.warn("IconLoader.Icon " + filename + " has not been found default icon will be used");
             return DEFAULT_UNKNOW_ICON;
          } else {
             return null;
@@ -33,7 +33,7 @@ public class IconLoader {
 
    public static ImageIcon icon(URL url) {
       if (url == null) {
-         Logger.warn(I18N.getMessage("com.vividsolutions.com.cadplan.jump.workbench.com.cadplan.jump.ui.images.IconLoader.The-icon-{0}-has-not-been-found-default-icon-will-be-used", new Object[]{url}));
+         Logger.warn("URL of the icon is null, a default icon will be used");
          return DEFAULT_UNKNOW_ICON;
       } else {
          return new ImageIcon(url);

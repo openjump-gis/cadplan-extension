@@ -24,9 +24,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.cadplan.icon.IconLoader;
+import com.vividsolutions.jump.I18N;
 import org.saig.core.gui.swing.sldeditor.util.FormUtils;
 
-import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.plugins.panel.ColorPanel;
 import com.cadplan.jump.plugins.panel.TextLabelPanel;
 import com.cadplan.jump.plugins.panel.TransparPanel;
@@ -40,8 +40,12 @@ import com.vividsolutions.jump.workbench.ui.GenericNames;
 import com.vividsolutions.jump.workbench.ui.MultiInputDialog;
 import com.vividsolutions.jump.workbench.ui.renderer.style.ColorThemingStyle;
 
+
 public class VertexSymbolsDialog extends MultiInputDialog implements ItemListener, ChangeListener {
+
 	private static final long serialVersionUID = 1L;
+	private static final I18N i18n = I18N.getInstance("com.cadplan");
+
 	public JCheckBox activateLineDecorationCB;
 	private JTabbedPane tabbedPane;
 	ButtonGroup group;
@@ -55,7 +59,7 @@ public class VertexSymbolsDialog extends MultiInputDialog implements ItemListene
 	public static ImageIcon ICON = IconLoader.icon("vsicon.gif");
 
 	public VertexSymbolsDialog() {
-		super(new JFrame(), I18NPlug.getI18N("VertexSymbols.Dialog") + 
+		super(new JFrame(), i18n.get("VertexSymbols.Dialog") +
 				" - "
 				+GenericNames.LAYER+" :"
 				+ VertexParams.selectedLayer, true);
@@ -102,10 +106,12 @@ public class VertexSymbolsDialog extends MultiInputDialog implements ItemListene
 		//	updateSideBarIconAndDescription();
 
 		String lineDecorationString ="<html><font color=black size=3>"
-				+ "<b>" + I18NPlug.getI18N("VertexSymbols.Dialog.activate-line-decoration") + "</b></html>";
+				+ "<b>" + i18n.get("VertexSymbols.Dialog.activate-line-decoration") + "</b></html>";
 		activateLineDecorationCB = this.addCheckBox(lineDecorationString, false);
 		activateLineDecorationCB.setSelected(VertexParams.lineDecoration );
-		String lineDecorationTooltip = StyleUtils.getName(I18NPlug.getI18N("VertexSymbols.Dialog.activate-line-decoration"), I18NPlug.getI18N("VertexSymbols.Dialog.activate-line-decoration-tooltip"));
+		String lineDecorationTooltip = StyleUtils.getName(
+				i18n.get("VertexSymbols.Dialog.activate-line-decoration"),
+				i18n.get("VertexSymbols.Dialog.activate-line-decoration-tooltip"));
 		activateLineDecorationCB.setToolTipText(lineDecorationTooltip);
 		activateLineDecorationCB.addChangeListener(e -> updateGUI());
 
@@ -170,10 +176,10 @@ public class VertexSymbolsDialog extends MultiInputDialog implements ItemListene
 	//[Giuseppe Aruta 2020-05-28] not activated as dialog is always too wide
 	public void updateSideBarIconAndDescription() {
 		if (VertexParams.lineDecoration) {
-			this.setSideBarDescription(I18NPlug.getI18N("VertexSymbols.Dialog.activate-line-decoration-tooltip"));
+			this.setSideBarDescription(i18n.get("VertexSymbols.Dialog.activate-line-decoration-tooltip"));
 			this.setSideBarImage( IconLoader.icon("Line.png"));
 		} else {
-			this.setSideBarDescription(I18NPlug.getI18N("VertexSymbols.Dialog.vertex-decoration-tooltip"));
+			this.setSideBarDescription(i18n.get("VertexSymbols.Dialog.vertex-decoration-tooltip"));
 			this.setSideBarImage( IconLoader.icon("Vertex.png"));
 		}
 	}

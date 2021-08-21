@@ -23,6 +23,7 @@
 package com.cadplan.jump;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -39,18 +40,17 @@ import java.awt.*;
  */
 public class AttributeOrder  extends JDialog implements ActionListener {
 
-    JList attributeList;
+    private static final I18N i18n = I18N.getInstance("jump_chart");
+    JList<String> attributeList;
     JButton upButton, downButton, acceptButton, cancelButton;
-    String [] localList;
+    String[] localList;
     int numItems;
     ChartDialog parent;
-    I18NPlug iPlug;
 
-    public AttributeOrder(ChartDialog parent, I18NPlug iPlug)
+    public AttributeOrder(ChartDialog parent)
     {
-        super(parent, iPlug.get("JumpChart.Order.Order"), true);
+        super(parent, i18n.get("JumpChart.Order.Order"), true);
         this.parent = parent;
-        this.iPlug = iPlug;
         numItems = 0;
         for (int i=0; i < ChartParams.attributes.length; i++)
         {
@@ -64,7 +64,7 @@ public class AttributeOrder  extends JDialog implements ActionListener {
         {
             if(ChartParams.includeAttribute[i])
             {
-                String item = ChartParams.attributes[i].name;
+                //String item = ChartParams.attributes[i].name;
                 int order = ChartParams.attributeOrder[i];
                 if(order >= 0) localList[order] = ChartParams.attributes[i].name;
                 else  localList[k] = ChartParams.attributes[i].name;
@@ -82,32 +82,32 @@ public class AttributeOrder  extends JDialog implements ActionListener {
         gb.setPosition(0,0);
         gb.setInsets(10,10,10,10);
         gb.setSpan(1,4);
-        attributeList = new JList(localList);
+        attributeList = new JList<>(localList);
         Border border = new EtchedBorder(EtchedBorder.LOWERED);
         panel.setBorder(border);
         panel.setBackground(Color.WHITE);
         panel.add(attributeList);
         gb.addComponent(panel);
 
-        upButton = new JButton(iPlug.get("JumpChart.Order.MoveUp"));
+        upButton = new JButton(i18n.get("JumpChart.Order.MoveUp"));
         gb.setPosition(1,0);
         gb.setInsets(10,0,0,10);
         gb.setFill(GridBagConstraints.HORIZONTAL);
         gb.addComponent(upButton);
 
-        downButton = new JButton(iPlug.get("JumpChart.Order.MoveDown"));
+        downButton = new JButton(i18n.get("JumpChart.Order.MoveDown"));
         gb.setPosition(1,1);
         gb.setInsets(10,0,0,10);
         gb.setFill(GridBagConstraints.HORIZONTAL);
         gb.addComponent(downButton);
 
-        acceptButton = new JButton(iPlug.get("JumpChart.Order.Accept"));
+        acceptButton = new JButton(i18n.get("JumpChart.Order.Accept"));
         gb.setPosition(1,2);
         gb.setInsets(10,0,0,10);
         gb.setFill(GridBagConstraints.HORIZONTAL);
         gb.addComponent(acceptButton);
 
-        cancelButton = new JButton(iPlug.get("JumpChart.Order.Cancel"));
+        cancelButton = new JButton(i18n.get("JumpChart.Order.Cancel"));
         gb.setPosition(1,3);
         gb.setInsets(10,0,10,10);
         gb.setFill(GridBagConstraints.HORIZONTAL);

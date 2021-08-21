@@ -20,7 +20,9 @@ import java.awt.image.ImageProducer;
 import javax.swing.JEditorPane;
 import javax.swing.JWindow;
 
+
 public class HTMLTextComponent extends Component {
+
    private static final long serialVersionUID = 1L;
    boolean debug = false;
    String text;

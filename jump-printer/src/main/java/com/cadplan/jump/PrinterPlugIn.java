@@ -21,6 +21,7 @@
  */
 package com.cadplan.jump;
 
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.plugin.*;
 import com.vividsolutions.jump.workbench.ui.MenuNames;
 import com.vividsolutions.jump.workbench.ui.WorkbenchToolBar;
@@ -62,7 +63,9 @@ import java.io.File;
  * Copyright 2005 Geoffrey G Roy.
  */
 public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
-  String version = "1.87";
+
+  private static final I18N i18n = I18N.getInstance("skyprinter");
+  String version = "2.1.0";
   Blackboard blackboard;
   //final Throwable[] throwable = new Throwable[]{null};
   PrinterSetup setup;
@@ -83,7 +86,6 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
   Vector<FurnitureImage> imageItems;
   boolean qualityOption;
   int printMode;
-  I18NPlug iPlug;
   String homePath;
   boolean printSinglePage = false;
 
@@ -91,7 +93,7 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
   public void initialize(PlugInContext context) {
 
     try {
-      Class.forName("com.lowagie.text.pdf.PdfWriter"); // test if VertexSymbols pluign is installed
+      Class.forName("com.lowagie.text.pdf.PdfWriter"); // test if VertexSymbols plugin is installed
     } catch (Exception ex) {
       JOptionPane.showMessageDialog(null, "This version of JumpPrinter requires the iText library\n" +
               "to also be installed.  This is available from http://sourceforge.net/projects/itexttoolbox/" +
@@ -99,12 +101,11 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
           JOptionPane.ERROR_MESSAGE);
       System.exit(1);
     }
-    iPlug = new I18NPlug("JumpPrinter", "language.JumpPrinterPlugin");
     //I18Ntext.setName("JumpPrinter");
 
     String fileMenuName = MenuNames.FILE;
-    String menuItemName = iPlug.get("JumpPrinter.MenuItem");
-    EnableCheckFactory check = new EnableCheckFactory(context.getWorkbenchContext());
+    String menuItemName = i18n.get("JumpPrinter.MenuItem");
+    EnableCheckFactory check = context.getCheckFactory();
     EnableCheck layersOK = check.createAtLeastNLayersMustExistCheck(0);
 
 
@@ -123,7 +124,7 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
     WorkbenchToolBar toolBar = context.getWorkbenchFrame().getToolBar();
 
     JButton button = toolBar.addPlugIn(icon, this, layersOK, context.getWorkbenchContext());
-    button.setToolTipText(iPlug.get("JumpPrinter.MenuItem"));
+    button.setToolTipText(i18n.get("JumpPrinter.MenuItem"));
 
     blackboard = new Blackboard();
     blackboard.put("Version", version);
@@ -180,8 +181,9 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
     String previousProject = (String) blackboard.get("ConfigFilePath", "None");
     if (!previousProject.equals("None") && !previousProject.equals(path + File.separator + printerConfigFileBase)) {
       //System.out.println("Project changed");
-      JOptionPane.showMessageDialog(null, iPlug.get("JumpPrinter.Setup.Message10"),
-          iPlug.get("JumpPrinter.Warning"), JOptionPane.WARNING_MESSAGE);
+      JOptionPane.showMessageDialog(null,
+          i18n.get("JumpPrinter.Setup.Message10"),
+          i18n.get("JumpPrinter.Warning"), JOptionPane.WARNING_MESSAGE);
     }
     blackboard.put("ConfigFilePath", path + File.separator + printerConfigFileBase);
     blackboard.put("ConfigFiles", configFiles);
@@ -191,7 +193,7 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
     cancelled = false;
     bounds = context.getLayerViewPanel().getBounds();
     pp = new PrinterPreview(context);
-    setup = new PrinterSetup(context, pp, blackboard, iPlug);
+    setup = new PrinterSetup(context, pp, blackboard);
     if (setup.cancelled) {
       if (pp.sb.toString().length() > 0) display(context, pp.sb.toString());
       cancelled = true;
@@ -235,7 +237,7 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
 //            System.out.println("ERROR: "+ex);
 //        }
     monitor.allowCancellationRequests();
-    monitor.report(iPlug.get("JumpPrinter.Preparing"));
+    monitor.report(i18n.get("JumpPrinter.Preparing"));
     PageFormat pageFormat = setup.getPageFormat();
     PrinterJob pj = PrinterJob.getPrinterJob();
     if (pageFormat == null && !setup.saveAsImage) // user has not done a page setup
@@ -270,11 +272,14 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
     {
 
       if (!pj.printDialog()) return;
-      monitor.report(iPlug.get("JumpPrinter.Printing"));
+      monitor.report(i18n.get("JumpPrinter.Printing"));
 
       int numPages = printer.getNumberOfPages();
       if (numPages > 50) {
-        int result = JOptionPane.showConfirmDialog(null, iPlug.get("JumpPrinter.NumberOfPages") + numPages + "\n" + iPlug.get("JumpPrinter.OkToPrint"), "Message...", JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(null,
+            i18n.get("JumpPrinter.NumberOfPages") + numPages + "\n" +
+                i18n.get("JumpPrinter.OkToPrint"), "Message...",
+            JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.NO_OPTION) return;
       }
       pj.setPrintable(printer, pageFormat);
@@ -290,7 +295,7 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
 //            Properties props = System.getProperties();
 //            String userDir = props.getProperty("user.dir");
       Dimension imageSize = pp.getPrintSize();
-      ImageSelectorDialog isd = new ImageSelectorDialog(imageSize.width, imageSize.height, iPlug);
+      ImageSelectorDialog isd = new ImageSelectorDialog(imageSize.width, imageSize.height, i18n);
       if (isd.cancelled) return;
       String type = isd.type;  // settings from isd
       int xSize = isd.xSize;
@@ -302,7 +307,7 @@ public class PrinterPlugIn extends AbstractPlugIn implements ThreadedPlugIn {
       String dirName = chooser.getDir();
       String fileName = chooser.getFile();
       if (fileName == null) return;
-      monitor.report(iPlug.get("JumpPrinter.SavingImage"));
+      monitor.report(i18n.get("JumpPrinter.SavingImage"));
 
       try {
         //System.out.println("initial file:"+ fileName);

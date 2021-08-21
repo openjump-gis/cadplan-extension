@@ -1,5 +1,6 @@
 package com.cadplan.jump;
 
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import com.vividsolutions.jump.workbench.model.Layer;
 import com.vividsolutions.jump.workbench.ui.renderer.style.BasicStyle;
@@ -18,6 +19,9 @@ import java.util.List;
  * Copyright 2005 Geoffrey G Roy.
  */
 public class LayerLegend extends Furniture {
+
+  private final I18N i18n = I18N.getInstance("skyprinter");
+
   private final boolean debug = false;
   Vector<LegendElement> legendItems;
   boolean border = true;
@@ -33,21 +37,19 @@ public class LayerLegend extends Furniture {
   //Color noColor = Color.WHITE;
   double fscale = 1.0;
   int size;
-  I18NPlug iPlug;
   boolean horizontal = true;
 
   public LayerLegend(PlugInContext context, Rectangle location) {
     this.location = location;
     legendItems = new Vector<>(10, 5);
-    updateLegend(context, null);
+    updateLegend(context);
     layerNumber = 70;
   }
 
 
-  public void updateLegend(PlugInContext context, I18NPlug iPlug) {
+  public void updateLegend(PlugInContext context) {
     Vector<LegendElement> tempItems = new Vector<>(10, 5);
-    this.iPlug = iPlug;
-    if (iPlug != null && legendName == null) legendName = iPlug.get("JumpPrinter.Furniture.LayerLegend");
+    if (legendName == null) legendName = i18n.get("JumpPrinter.Furniture.LayerLegend");
     boolean showLine;
     boolean showFill;
     if (legendItems != null) {
@@ -169,7 +171,7 @@ public class LayerLegend extends Furniture {
     g.setColor(legendTitleColor);
     g.setFont(bigFont);
     String name = legendName;
-    if (name == null) name = iPlug.get("JumpPrinter.Furniture.LayerLegend");
+    if (name == null) name = i18n.get("JumpPrinter.Furniture.LayerLegend");
     if (showTitle) {
       g.drawString(name, location.x + 5, location.y + fontHeight / 2 + 5);
     }

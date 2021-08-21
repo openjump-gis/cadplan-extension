@@ -13,6 +13,7 @@ import com.cadplan.jump.ui.WKTshape;
 import com.cadplan.jump.utils.VertexParams;
 
 public class ExternalSymbolsRenderer {
+
 	public static final int POLYS = 0;
 	public static final int STARS = 1;
 	public static final int ANYS = 2;

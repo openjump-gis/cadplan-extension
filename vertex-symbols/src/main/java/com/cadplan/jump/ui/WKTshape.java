@@ -17,7 +17,9 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 
+
 public class WKTshape implements Shape{
+
 	public int lineWidth;
 	public int extent;
 	public String wktText;

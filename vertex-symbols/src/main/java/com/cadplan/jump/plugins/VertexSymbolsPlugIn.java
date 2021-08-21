@@ -5,9 +5,9 @@ import javax.swing.JOptionPane;
 
 import com.cadplan.icon.IconLoader;
 import com.cadplan.jump.utils.VertexStyler;
-import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.utils.LoadSymbolFiles;
 import com.cadplan.jump.utils.VertexParams;
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.model.Layer;
 import com.vividsolutions.jump.workbench.plugin.AbstractPlugIn;
 import com.vividsolutions.jump.workbench.plugin.EnableCheckFactory;
@@ -17,11 +17,13 @@ import com.vividsolutions.jump.workbench.ui.GUIUtil;
 import com.vividsolutions.jump.workbench.ui.MenuNames;
 
 public class VertexSymbolsPlugIn extends AbstractPlugIn {
+
 	public static ImageIcon ICON = IconLoader.icon("vsicon.gif");
+	private static final I18N i18n = I18N.getInstance("com.cadplan");
 
 	@Override
 	public void initialize(PlugInContext context) throws Exception {
-		EnableCheckFactory enableCheckFactory = new EnableCheckFactory(context.getWorkbenchContext());
+		EnableCheckFactory enableCheckFactory = context.getCheckFactory();
 		MultiEnableCheck multiEnableCheck = new MultiEnableCheck();
 		multiEnableCheck.add(enableCheckFactory.createAtLeastNLayersMustExistCheck(1));
 		multiEnableCheck.add(enableCheckFactory.createAtLeastNLayersMustBeSelectedCheck(1));
@@ -36,7 +38,7 @@ public class VertexSymbolsPlugIn extends AbstractPlugIn {
 
 	@Override
 	public String getName() {
-		return I18NPlug.getI18N("VertexSymbols.MenuItem");
+		return i18n.get("VertexSymbols.MenuItem");
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class VertexSymbolsPlugIn extends AbstractPlugIn {
 		Layer layer ;
 		if (context.getSelectedLayers().length ==0) {
 			JOptionPane.showMessageDialog(null,
-					I18NPlug.getI18N("VertexNote.Dialog.Message2"), "Warning...", 2);
+					i18n.get("VertexNote.Dialog.Message2"), "Warning...", 2);
 			return false;
 		}
 		layer = context.getSelectedLayer(0); 

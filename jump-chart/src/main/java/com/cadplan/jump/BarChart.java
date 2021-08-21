@@ -47,7 +47,7 @@ public class BarChart
     double xoffs, yoffs;
     double originX, originY;
 
-    public BarChart(ChartAttribute [] attributes, ChartValues [] values, double screenScale)
+    public BarChart(ChartAttribute[] attributes, ChartValues[] values, double screenScale)
     {
         this.attributes = attributes;
         this.values = values;
@@ -74,14 +74,14 @@ public class BarChart
          double x, y;
          double barHeightRatio;
          double maxHeight;
-         double dx = 0.0;
+         double dx;
 
-         double [] itemMax = new double[values.length];
+         double[] itemMax = new double[values.length];
 
          for (int i=0; i < values.length; i++)
          {
 
-             double [] data = values[i].values;
+             double[] data = values[i].values;
              itemMax[i] = Double.MIN_VALUE;
 
              for (int j=0; j < data.length; j++)

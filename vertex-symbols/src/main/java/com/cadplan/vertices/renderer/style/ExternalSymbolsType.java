@@ -31,6 +31,7 @@ import com.vividsolutions.jump.workbench.ui.renderer.style.VertexStyle;
 import org.locationtech.jts.geom.*;
 
 public class ExternalSymbolsType extends VertexStyle {
+
 	boolean debug = false;
 	protected boolean textEnabled = false;
 	protected String textAttributeName = null;

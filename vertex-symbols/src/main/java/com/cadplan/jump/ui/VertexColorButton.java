@@ -10,7 +10,9 @@ import javax.swing.JColorChooser;
 
 import com.vividsolutions.jump.I18N;
 
+
 public class VertexColorButton extends Button implements ActionListener {
+
 	private static final long serialVersionUID = 1L;
 	Color color;
 
@@ -30,7 +32,8 @@ public class VertexColorButton extends Button implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		Color newColor = JColorChooser.showDialog(this, I18N.get("org.openjump.core.ui.plugin.raster.color.RasterColorEditorPlugIn.Select-color"), this.color);
+		Color newColor = JColorChooser.showDialog(this,
+				I18N.JUMP.get("org.openjump.core.ui.plugin.raster.color.RasterColorEditorPlugIn.Select-color"), this.color);
 		if (newColor != null) {
 			color = newColor;
 			setBackground(this.color);

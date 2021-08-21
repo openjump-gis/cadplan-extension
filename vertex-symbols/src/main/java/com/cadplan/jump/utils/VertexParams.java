@@ -10,6 +10,7 @@ import com.vividsolutions.jump.workbench.WorkbenchContext;
 import com.vividsolutions.jump.workbench.model.Layer;
 import com.vividsolutions.jump.workbench.ui.renderer.style.ColorThemingStyle;
 
+
 public class VertexParams {
 
 	public static String version = "0.20";

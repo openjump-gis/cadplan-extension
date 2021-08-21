@@ -325,12 +325,6 @@ public class MapImagePrinter extends Component {
         themeMap = themeStyle.getAttributeValueToBasicStyleMap();
         if (debug) System.out.println("Theme Map:" + themeMap.toString());
         themeStyles = themeMap.values();
-        //                      Iterator is = themeStyles.iterator();
-        //                     while(is.hasNext())
-        //                     {
-        //                         BasicStyle istyle = (BasicStyle) is.next();
-        //                         System.out.println("Style fill color:"+istyle.getFillColor());
-        //                     }
 
         mapKeys = themeMap.keySet();
         if (debug) System.out.println("mapKeys:" + mapKeys.toString());
@@ -369,7 +363,7 @@ public class MapImagePrinter extends Component {
       if (!basicStyle.isRenderingFillPattern()) fillPattern = null;
       rd.fillPattern = fillPattern;
       FeatureCollectionWrapper fcw = layer.getFeatureCollectionWrapper();
-      List featureCollection = fcw.getFeatures();
+      List<Feature> featureCollection = fcw.getFeatures();
       Iterator<Feature> k = featureCollection.iterator();
 
       if (debug) System.out.println("\n**** Number of features in layer: " + featureCollection.size());
@@ -407,7 +401,6 @@ public class MapImagePrinter extends Component {
         } catch (Exception ignored) {
 
         }
-
 
         rd.feature = feature;
         labelValue = null;

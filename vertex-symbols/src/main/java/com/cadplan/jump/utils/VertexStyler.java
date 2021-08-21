@@ -23,7 +23,9 @@ import de.latlon.deejump.plugin.style.BitmapVertexStyle;
 import de.latlon.deejump.plugin.style.CircleVertexStyle;
 import de.latlon.deejump.plugin.style.CrossVertexStyle;
 
+
 public class VertexStyler {
+
 	Layer layer;
 
 	public void setLayer(Layer layer) {

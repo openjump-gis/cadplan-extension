@@ -24,9 +24,10 @@ class MyFileFilter extends FileFilter {
       this.extensions = paramArrayOfString.clone();
       this.toLower(this.extensions);
 
-      for(byte b = 0; b < this.extensions.length; ++b) {
-         if (this.extensions[b].equals("*")) {
+      for (String extension : this.extensions) {
+         if (extension.equals("*")) {
             this.acceptAll = true;
+            break;
          }
       }
 

@@ -9,8 +9,6 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import com.cadplan.jump.utils.StyleUtils;
 import com.cadplan.jump.utils.VertexParams;
@@ -36,7 +34,7 @@ public class TransparPanel extends JPanel implements StylePanel {
 	public TransparPanel(Color color) {
 		GridLayout layout = new GridLayout(0, 1);
 		this.setLayout(layout);
-		this.transparencyLabel = new JLabel(I18N.get("ui.style.BasicStylePanel.transparency"));
+		this.transparencyLabel = new JLabel(I18N.JUMP.get("ui.style.BasicStylePanel.transparency"));
 		this.transparencyPanel.getSlider().getModel().addChangeListener(e -> {
 			StyleUtils.setAlpha(VertexParams.selectedLayer, 255 - TransparPanel.this.transparencyPanel.getSlider().getValue());
 			VertexParams.selectedLayer.fireAppearanceChanged();

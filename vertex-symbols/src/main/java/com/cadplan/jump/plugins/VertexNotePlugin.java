@@ -3,7 +3,7 @@ package com.cadplan.jump.plugins;
 import javax.swing.ImageIcon;
 
 import com.cadplan.icon.IconLoader;
-import com.cadplan.language.I18NPlug;
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.plugin.AbstractPlugIn;
 import com.vividsolutions.jump.workbench.plugin.EnableCheck;
 import com.vividsolutions.jump.workbench.plugin.EnableCheckFactory;
@@ -13,11 +13,14 @@ import com.vividsolutions.jump.workbench.ui.LayerViewPanel;
 import com.vividsolutions.jump.workbench.ui.MenuNames;
 
 public class VertexNotePlugin extends AbstractPlugIn {
+
+	private static final I18N i18n = I18N.getInstance("com.cadplan");
+
 	public static ImageIcon ICON = IconLoader.icon("noteicon.gif");
 
 	@Override
 	public void initialize(PlugInContext paramPlugInContext) throws Exception {
-		EnableCheckFactory check = new EnableCheckFactory(paramPlugInContext.getWorkbenchContext());
+		EnableCheckFactory check = paramPlugInContext.getCheckFactory();
 		EnableCheck scheck = check.createAtLeastNFeaturesMustBeSelectedCheck(1);
 		MultiEnableCheck mcheck = new MultiEnableCheck();
 		mcheck.add(check.createAtLeastNLayersMustExistCheck(1));
@@ -30,7 +33,7 @@ public class VertexNotePlugin extends AbstractPlugIn {
 
 	@Override
 	public String getName() {
-		return I18NPlug.getI18N("VertexNote.MenuItem");
+		return i18n.get("VertexNote.MenuItem");
 	}
 
 	@Override

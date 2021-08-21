@@ -14,7 +14,9 @@ import com.cadplan.vertices.renderer.style.PolygonVertexStyle;
 import com.cadplan.vertices.renderer.style.StarVertexStyle;
 import com.vividsolutions.jump.workbench.ui.renderer.style.VertexStyle;
 
+
 public class VertexPanel extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 	private final int sides;
 	private final int type;

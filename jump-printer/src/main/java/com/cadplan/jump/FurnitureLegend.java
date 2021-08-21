@@ -19,6 +19,7 @@ import com.cadplan.vertices.renderer.style.ImageVertexStyle;
 import com.cadplan.vertices.renderer.style.PolygonVertexStyle;
 import com.cadplan.vertices.renderer.style.StarVertexStyle;
 import com.cadplan.vertices.renderer.style.WKTVertexStyle;
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.Logger;
 import com.vividsolutions.jump.workbench.model.Layer;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
@@ -33,8 +34,9 @@ import com.vividsolutions.jump.workbench.ui.renderer.style.VertexStyle;
  * Time: 14:47:51
  * Copyright 2005 Geoffrey G Roy.
  */
-public class FurnitureLegend   extends Furniture
-{
+public class FurnitureLegend  extends Furniture {
+
+	private final I18N i18n = I18N.getInstance("skyprinter");
 	private final boolean debug = false;
 	Vector<LegendElement> legendItems;
 	boolean border = true;
@@ -52,24 +54,22 @@ public class FurnitureLegend   extends Furniture
 	//Color noColor = Color.WHITE;
 	double fscale = 1.0;
 	int size;
-	I18NPlug iPlug;
 
 	public FurnitureLegend(PlugInContext context, Rectangle location)
 	{
 		this.location = location;
 		legendItems = new Vector<>(10,5);
-		updateLegend(context,null);
+		updateLegend(context);
 		layerNumber = 60;
 	}
 
 
-	public void updateLegend(PlugInContext context, I18NPlug iPlug)
+	public void updateLegend(PlugInContext context)
 	{
 		Vector<LegendElement> tempItems = new Vector<>(10,5);
 		boolean showLine;
 		boolean showFill;
-		if(iPlug != null && legendName == null) legendName= iPlug.get("JumpPrinter.Furniture.Legend");
-		this.iPlug = iPlug;
+		if(i18n != null && legendName == null) legendName= i18n.get("JumpPrinter.Furniture.Legend");
 		if(legendItems != null)
 		{
 			for (int i=0; i < legendItems.size(); i++)
@@ -173,7 +173,7 @@ public class FurnitureLegend   extends Furniture
 		g.setFont(bigFont);
 		String name = legendName; 
 
-		if(name == null) name = iPlug.get("JumpPrinter.Furniture.Legend");
+		if(name == null) name = i18n.get("JumpPrinter.Furniture.Legend");
 		int nameWidth = fmt.stringWidth(name);
 		if(showTitle) 
 		{

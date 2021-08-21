@@ -24,6 +24,7 @@
 package com.cadplan.jump;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.util.Blackboard;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 
@@ -49,14 +50,16 @@ import java.text.DecimalFormat;
  * Time: 07:44:45
  * Copyright 2005 Geoffrey G Roy.
  */
-public class PrinterSetup extends JDialog implements ActionListener, ItemListener, WindowListener
-{
+public class PrinterSetup extends JDialog
+    implements ActionListener, ItemListener, WindowListener {
 
+    private static final I18N i18n = I18N.getInstance("skyprinter");
     private JLabel scaleLabel, printLabel;
     private JTextField scaleField;
     static public JCheckBox autoCB, qualityCB, singlePageCB;
-    private JButton setupButton, cancelButton, printButton, aboutButton, furnitureButton, loadButton, saveButton,
-          zoomInButton,zoomOutButton,zoom100Button, helpButton, saveImageButton;
+    private final JButton setupButton, cancelButton, printButton,
+        aboutButton, furnitureButton, loadButton, saveButton,
+        zoomInButton,zoomOutButton,zoom100Button, helpButton, saveImageButton;
     
     private JComboBox<String> printSizeCombo, printQualityCombo, configCombo;
     public boolean cancelled = false;
@@ -73,7 +76,6 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
     Blackboard blackboard;
     PlugInContext context;
     String [] paperSizes = {"A4","A4R","A3","A3R"};
-    I18NPlug iPlug;
     String [] qualityItems = {"ISA Renderer", "Core Renderer", "External Renderer"};
     Point2D.Double pageOffset;
     FurnitureTitle title = new FurnitureTitle("",new Font("SansSerif",Font.PLAIN,24),new Rectangle(0,0,50,20),false);
@@ -96,34 +98,30 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
     private boolean printSinglePage = false;
 
 
-   public PrinterSetup(PlugInContext context,PrinterPreview preview, Blackboard blackboard, I18NPlug iPlug)
+   public PrinterSetup(PlugInContext context,PrinterPreview preview,
+                       Blackboard blackboard)
    {
-       super(new JFrame(),iPlug.get("JumpPrinter.Setup"), true);
+       super(new JFrame(), i18n.get("JumpPrinter.Setup"), true);
        this.context = context;
        this.preview = preview;
        this.blackboard = blackboard;
-       this.iPlug = iPlug;
-       scaleItem.setIPlug(this.iPlug);
+       scaleItem.setIPlug(i18n);
        notes.addElement(note);
        restoreBlackboard();
 
-
        // set up user interface
-       
-        
-       
        
        GridBagDesigner gb = new GridBagDesigner(this);
 
 
-       aboutButton = new JButton(iPlug.get("JumpPrinter.Setup.About"));
+       aboutButton = new JButton(i18n.get("JumpPrinter.Setup.About"));
        aboutButton.addActionListener(this);
        gb.setPosition(0,0);
        gb.setInsets(0,5,0,0);
        gb.setFill(GridBagConstraints.HORIZONTAL);
        gb.addComponent(aboutButton);
 
-       autoCB = new JCheckBox(iPlug.get("JumpPrinter.Setup.FitToPage") );
+       autoCB = new JCheckBox(i18n.get("JumpPrinter.Setup.FitToPage") );
        gb.setPosition(1,0);
        gb.setInsets(0,10,0,0);
        gb.addComponent(autoCB);
@@ -144,7 +142,7 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
 
 
 
-       scaleLabel = new JLabel(iPlug.get("JumpPrinter.Setup.Scale"));
+       scaleLabel = new JLabel(i18n.get("JumpPrinter.Setup.Scale"));
        gb.setPosition(3,0);
        gb.setInsets(0,0,0,0);
        gb.setAnchor(GridBagConstraints.EAST);
@@ -191,14 +189,14 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
        gb.setAnchor(GridBagConstraints.WEST);
        gb.addComponent(zoomPanel);
 
-       furnitureButton = new JButton(iPlug.get("JumpPrinter.Setup.Furniture"));
+       furnitureButton = new JButton(i18n.get("JumpPrinter.Setup.Furniture"));
        furnitureButton.addActionListener(this);
        gb.setPosition(6,0);
        gb.setInsets(0,5,0,0);
        //gb.setFill(GridBagConstraints.HORIZONTAL);
        gb.addComponent(furnitureButton);
 
-       helpButton = new JButton(iPlug.get("JumpPrinter.Setup.Help"));
+       helpButton = new JButton(i18n.get("JumpPrinter.Setup.Help"));
        helpButton.addActionListener(this);
        gb.setPosition(7,0);
        gb.setInsets(0,5,0,10);
@@ -216,8 +214,6 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
 //       gb.setInsets(3,10,10,0);
 //       gb.addComponent(printSizeCombo);
 
-
-
        gb.setPosition(0,1);
        gb.setSpan(8,1);
        gb.setFill(GridBagConstraints.BOTH);
@@ -227,14 +223,14 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
        JPanel bottomPanel = new JPanel();
        GridBagDesigner gbb = new GridBagDesigner(bottomPanel);
 
-       cancelButton = new JButton(iPlug.get("JumpPrinter.Setup.Cancel"));
+       cancelButton = new JButton(i18n.get("JumpPrinter.Setup.Cancel"));
        cancelButton.addActionListener(this);
        gbb.setPosition(0,0);
        gbb.setInsets(0,5,0,0);
        //gb.setFill(GridBagConstraints.HORIZONTAL);
        gbb.addComponent(cancelButton);
 
-       loadButton = new JButton(iPlug.get("JumpPrinter.Setup.LoadCfg"));
+       loadButton = new JButton(i18n.get("JumpPrinter.Setup.LoadCfg"));
        loadButton.addActionListener(this);
        gbb.setPosition(1,0);
        gbb.setInsets(0,10,0,0);
@@ -255,7 +251,7 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
        configCombo.setSelectedIndex(item);
        configCombo.addActionListener(this);
 
-       saveButton = new JButton(iPlug.get("JumpPrinter.Setup.SaveCfg"));
+       saveButton = new JButton(i18n.get("JumpPrinter.Setup.SaveCfg"));
        saveButton.addActionListener(this);
        gbb.setPosition(3,0);
        gbb.setInsets(0,0,0,0);
@@ -263,7 +259,7 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
        gbb.setFill(GridBagConstraints.HORIZONTAL);
        gbb.addComponent(saveButton);
 
-       setupButton = new JButton(iPlug.get("JumpPrinter.Setup.PageSetup"));
+       setupButton = new JButton(i18n.get("JumpPrinter.Setup.PageSetup"));
        setupButton.addActionListener(this);
        gbb.setPosition(5,0);
        gbb.setInsets(0,10,0,0);
@@ -271,7 +267,7 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
        gbb.setFill(GridBagConstraints.HORIZONTAL);
        gbb.addComponent(setupButton);
 
-       printButton = new JButton(iPlug.get("JumpPrinter.Setup.Print"));
+       printButton = new JButton(i18n.get("JumpPrinter.Setup.Print"));
        printButton.addActionListener(this);
        gbb.setPosition(6,0);
        gbb.setInsets(0,10,0,0);
@@ -280,21 +276,20 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
        gbb.addComponent(printButton);
        
        
-       singlePageCB = new JCheckBox(iPlug.get("JumpPrinter.Setup.SinglePage"));
+       singlePageCB = new JCheckBox(i18n.get("JumpPrinter.Setup.SinglePage"));
        gbb.setPosition(7,0);
        gbb.setInsets(0,0,0,0);
        gbb.addComponent(singlePageCB);
        singlePageCB.setSelected(printSinglePage);
        
 
-      saveImageButton = new JButton(iPlug.get("JumpPrinter.Setup.SaveImage"));
+      saveImageButton = new JButton(i18n.get("JumpPrinter.Setup.SaveImage"));
       saveImageButton.addActionListener(this);
       gbb.setPosition(8,0);
       gbb.setInsets(0,10,0,10);
       gbb.setAnchor(GridBagConstraints.WEST);
       gbb.setFill(GridBagConstraints.HORIZONTAL);
       gbb.addComponent(saveImageButton);
-
 
 
        gb.setPosition(0,2);
@@ -304,8 +299,8 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
        gb.setWeight(1.0,0.0);
        gb.addComponent(bottomPanel);
 
-       legend.updateLegend(context,iPlug);
-       layerLegend.updateLegend(context,iPlug);
+       legend.updateLegend(context);
+       layerLegend.updateLegend(context);
        updateDrawing();
 
        autoCB.addItemListener(this);
@@ -426,13 +421,16 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
         }
         catch(NumberFormatException ex)
         {
-            JOptionPane.showMessageDialog(this,iPlug.get("JumpPrinter.Setup.Message2")+ "["+scaleField.getText()+"]",iPlug.get("JumpPrinter.Error"),
+            JOptionPane.showMessageDialog(this,
+                i18n.get("JumpPrinter.Setup.Message2")+ "["+scaleField.getText()+"]",
+                i18n.get("JumpPrinter.Error"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if(tempScale <= 0.0)
         {
-            JOptionPane.showMessageDialog(this,iPlug.get("JumpPrinter.Setup.Message1"),iPlug.get("JumpPrinter.Error"),
+            JOptionPane.showMessageDialog(this, i18n.get("JumpPrinter.Setup.Message1"),
+                i18n.get("JumpPrinter.Error"),
                     JOptionPane.ERROR_MESSAGE);
             scaleField.setText(formatScale(scale));
             return false;
@@ -691,22 +689,25 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
         }
         if(ev.getSource() == aboutButton)
         {
-            JOptionPane.showMessageDialog(this,"Jump Printer Plugin: vers:"+blackboard.get("Version","xxx")+
-            "\n� 2007-11 Cadplan\n"+
-            "http://www.cadplan.com.au",iPlug.get("JumpPrinter.Setup.About")+"...",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                "Jump Printer Plugin: " +
+                blackboard.get("Version","xxx") +
+                    "\n\u00A9 2007-2011 Cadplan\n"+
+                    "http://www.cadplan.com.au",i18n.get("JumpPrinter.Setup.About")+"...",
+                JOptionPane.INFORMATION_MESSAGE);
         }
 
         if(ev.getSource() == helpButton)
         {
-            HelpDialog help = new HelpDialog(this, iPlug);
+            HelpDialog help = new HelpDialog(this);
             //OnLineHelp help = new OnLineHelp(this,"en");
         }
 
         if(ev.getSource() == furnitureButton)
         {
-            legend.updateLegend(context,iPlug);
-            layerLegend.updateLegend(context, iPlug);
-            FurnitureDialog fd = new FurnitureDialog(this, title, scaleItem, border, borders,  north, notes, legend, layerLegend, imageItems, iPlug);
+            legend.updateLegend(context);
+            layerLegend.updateLegend(context);
+            FurnitureDialog fd = new FurnitureDialog(this, title, scaleItem, border, borders,  north, notes, legend, layerLegend, imageItems);
         }
 
         if(ev.getSource() == saveButton)
@@ -714,10 +715,10 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
             updateBlackboard();
             String cfileName = configFileName+"_"+configCombo.getSelectedItem()+".xml";
             if(configCombo.getSelectedItem().equals("Default")) cfileName = configFileName+".xml";
-            XMLconverter converter = new XMLconverter(cfileName, iPlug);
+            XMLconverter converter = new XMLconverter(cfileName);
             converter.save(blackboard);
 
-            preview.context.getWorkbenchFrame().setStatusMessage(iPlug.get("JumpPrinter.Setup.Message4")+" "+configCombo.getSelectedItem());
+            preview.context.getWorkbenchFrame().setStatusMessage(i18n.get("JumpPrinter.Setup.Message4")+" "+configCombo.getSelectedItem());
 
         }
 
@@ -728,19 +729,19 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
             if(configCombo.getSelectedItem().equals("Default")) cfileName = configFileName+".xml";
 
             //System.out.println("creating converter: iPlug:"+iPlug.pluginName);
-            XMLconverter converter = new XMLconverter(cfileName, iPlug);
+            XMLconverter converter = new XMLconverter(cfileName);
             if(converter.parse(blackboard))
             {
                 restoreBlackboard();
                 updateDrawing();
                 preview.context.getWorkbenchFrame().setStatusMessage(
-                    iPlug.get("JumpPrinter.Setup.Message3")+" "+configCombo.getSelectedItem());
+                    i18n.get("JumpPrinter.Setup.Message3")+" "+configCombo.getSelectedItem());
             }
             else
             {
                 JOptionPane.showMessageDialog(this,
-                    iPlug.get("JumpPrinter.Setup.Message5"),
-                    iPlug.get("JumpPrinter.Warning"),
+                    i18n.get("JumpPrinter.Setup.Message5"),
+                    i18n.get("JumpPrinter.Warning"),
                     JOptionPane.WARNING_MESSAGE);
             }
         }
@@ -780,8 +781,10 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
                // configCombo.removeActionListener(this);
 
                //System.out.println("Removing: "+selectedConfigIndex);
-               int response = JOptionPane.showConfirmDialog(this,iPlug.get("JumpPrinter.Setup.Message9")+ " "+
-                  configNames.elementAt(selectedConfigIndex), iPlug.get("JumpPrinter.Warning"), JOptionPane.YES_NO_OPTION);
+               int response = JOptionPane.showConfirmDialog(this,
+                   i18n.get("JumpPrinter.Setup.Message9")+ " "+
+                  configNames.elementAt(selectedConfigIndex),
+                   i18n.get("JumpPrinter.Warning"), JOptionPane.YES_NO_OPTION);
                 if( response == JOptionPane.YES_OPTION)
                 {
                    //File cfile= new File(configFileName+"_"+configNames.elementAt(selectedConfigIndex)+".xml");
@@ -849,7 +852,9 @@ public class PrinterSetup extends JDialog implements ActionListener, ItemListene
            qualityOption = qualityCB.isSelected();
            if(!qualityOption)
            {
-               JOptionPane.showMessageDialog(this,iPlug.get("JumpPrinter.Setup.Message7"),iPlug.get("JumpPrinter.Warning"), JOptionPane.WARNING_MESSAGE);
+               JOptionPane.showMessageDialog(this,
+                   i18n.get("JumpPrinter.Setup.Message7"),
+                   i18n.get("JumpPrinter.Warning"), JOptionPane.WARNING_MESSAGE);
 //               JOptionPane.showMessageDialog(this,"Choosing the \'Accurate\' option may not correctly scale raster\n"+
 //               "image layers.  Use the \'Quality\' option for raster layers.","Warning...", JOptionPane.WARNING_MESSAGE);
            }

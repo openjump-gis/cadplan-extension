@@ -47,7 +47,6 @@ import org.saig.core.gui.swing.sldeditor.util.FormUtils;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
-import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.ui.PreviewPanel;
 import com.cadplan.jump.utils.DataWrapper;
 import com.cadplan.jump.utils.StyleUtils;
@@ -65,21 +64,21 @@ import com.vividsolutions.jump.workbench.plugin.EnableCheck;
 import com.vividsolutions.jump.workbench.plugin.PlugIn;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import com.vividsolutions.jump.workbench.ui.GUIUtil;
-import com.vividsolutions.jump.workbench.ui.LayerViewPanelProxy;
 import com.vividsolutions.jump.workbench.ui.WorkbenchToolBar;
 import com.vividsolutions.jump.workbench.ui.images.IconLoader;
 import com.vividsolutions.jump.workbench.ui.renderer.style.BasicStyle;
 import com.vividsolutions.jump.workbench.ui.renderer.style.ColorThemingStyle;
-import com.vividsolutions.jump.workbench.ui.task.TaskMonitorManager;
+
 
 public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 
 	private static final long serialVersionUID = 1L;
+	I18N i18n = I18N.getInstance("com.cadplan");
 	public JPanel upperPane;
 	private JScrollPane scrollPane0 = new JScrollPane();
 	private static final Map<String, DataWrapper> map = new LinkedHashMap<>();
 	public JPanel mainPanel = new JPanel();
-	static String otherValues = I18N.get("ui.renderer.style.DiscreteColorThemingState.all-other-values");
+	static String otherValues = I18N.JUMP.get("ui.renderer.style.DiscreteColorThemingState.all-other-values");
 	static int size=1;
 
 
@@ -179,7 +178,7 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 		JLabel lab;
 		if (numberOfAttributesUsableInColorTheming >= 1) {
 			if (!styles.isEnabled()) {
-				lab = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Warning7"));
+				lab = new JLabel(i18n.get("VertexSymbols.Dialog.Warning7"));
 				this.add(lab);
 			} else if (ColorThemingStyle.get(layer).isEnabled()) {
 				if (attributeNameList.contains(styles.getAttributeName())) {
@@ -194,7 +193,7 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 							saveStylePlugIn.getIcon(),
 							AbstractPlugIn.toActionListener(this.saveStylePlugIn, StyleUtils.frameInstance.getContext(), null), null);
 					 upperPane = new JPanel(new GridBagLayout());
-					 upperPane.add(new JLabel(I18NPlug.getI18N("VertexSymbols.VertexColorThemingDualog.manual")), new GridBagConstraints(1, 0, 3, 1, 1.0D, 0.0D, 17, 2, new Insets(0, 0, 0, 0), 0, 0));
+					 upperPane.add(new JLabel(i18n.get("VertexSymbols.VertexColorThemingDualog.manual")), new GridBagConstraints(1, 0, 3, 1, 1.0D, 0.0D, 17, 2, new Insets(0, 0, 0, 0), 0, 0));
 					 upperPane.add(toolBar, new GridBagConstraints(4, 0, 1, 1, 0.0D, 0.0D, 13, 2, new Insets(0, 0, 0, 0), 0, 0));
 					try {
 
@@ -208,12 +207,12 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 					//	this.add(transparency,BorderLayout.SOUTH);
 
 				} else if (!attributeNameList.contains(styles.getAttributeName())) {
-					lab = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Warning8"));
+					lab = new JLabel(i18n.get("VertexSymbols.Dialog.Warning8"));
 					 add(lab);
 				}
 			}
 		} else {
-			lab = new JLabel(I18N.get("ui.style.ChangeStylesPlugIn.this-layer-has-no-attributes"));
+			lab = new JLabel(I18N.JUMP.get("ui.style.ChangeStylesPlugIn.this-layer-has-no-attributes"));
 			 add(lab);
 		}
 
@@ -228,9 +227,9 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 		int gridx = 0;
 		int gridy = 0;
 		String STYLE ="<html><font color=black size=4><b><u>"+
-				I18N.get("ui.renderer.style.ColorThemingTableModel.style")+ "</b></u></html>";
+				I18N.JUMP.get("ui.renderer.style.ColorThemingTableModel.style")+ "</b></u></html>";
 		String VALUE ="<html><font color=black size=4><b><u>"+
-				I18N.get("ui.renderer.style.ColorThemingTableModel.attribute-value")+ "</b></u></html>";
+				I18N.JUMP.get("ui.renderer.style.ColorThemingTableModel.attribute-value")+ "</b></u></html>";
 		StyleUtils.addRowInGBL(mainPanel, gridy, gridx, new JLabel(STYLE), new JLabel(VALUE));
 
 		int row = gridy + 1;
@@ -346,7 +345,7 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 
 	@Override
 	public String getTitle() {
-		return I18N.get("ui.renderer.style.ColorThemingPanel.colour-theming");
+		return I18N.JUMP.get("ui.renderer.style.ColorThemingPanel.colour-theming");
 	}
 
 	@Override
@@ -376,7 +375,7 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 	final public ToolbarPlugIn saveStylePlugIn = new ToolbarPlugIn() {
 		@Override
 		public String getName() {
-			return  I18N
+			return  I18N.JUMP
 					.get("org.openjump.core.ui.plugin.style.StylePlugIns.export-style");
 		}
 		@Override
@@ -447,7 +446,7 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 			JOptionPane
 			.showMessageDialog(
 					JUMPWorkbench.getInstance().getFrame(),
-					I18N.get("org.openjump.core.ui.plugin.raster.RasterImageLayerPropertiesPlugIn.file.saved")
+					I18N.JUMP.get("org.openjump.core.ui.plugin.raster.RasterImageLayerPropertiesPlugIn.file.saved")
 					+ ": " + filePath, getName(),
 					JOptionPane.PLAIN_MESSAGE);	
 			return true;
@@ -458,7 +457,7 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 	final public ToolbarPlugIn saveAsResultPlugIn = new ToolbarPlugIn() {
 		@Override
 		public String getName() {
-			return  I18NPlug.getI18N("VertexSymbols.Dialog.save-panel-as-result-view");
+			return i18n.get("VertexSymbols.Dialog.save-panel-as-result-view");
 		}
 		@Override
 		public Icon getIcon() {
@@ -467,13 +466,13 @@ public class VertexColorThemingPanel extends JPanel implements PropertyPanel {
 
 		@Override
 		public boolean execute(PlugInContext context) {
-			String TITLE =I18NPlug.getI18N("VertexSymbols.Dialog.legend")+" - "+VertexParams.selectedLayer.getName();
+			String TITLE = i18n.get("VertexSymbols.Dialog.legend")+" - "+VertexParams.selectedLayer.getName();
 			AdditionalResults.addAdditionalResult(TITLE, scrollPane0);
 
 			JOptionPane
 			.showMessageDialog(
 					JUMPWorkbench.getInstance().getFrame(),
-					I18NPlug.getI18N("VertexSymbols.Dialog.panel-saved")
+					i18n.get("VertexSymbols.Dialog.panel-saved")
 					+ "("+TITLE+")", getName(),
 					JOptionPane.PLAIN_MESSAGE);	
 

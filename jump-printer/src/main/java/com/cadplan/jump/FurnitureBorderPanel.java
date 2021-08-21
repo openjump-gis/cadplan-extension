@@ -22,6 +22,7 @@
 package com.cadplan.jump;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -39,8 +40,9 @@ import java.util.Vector;
  * Time: 08:00:10
  * Copyright 2005 Geoffrey G Roy.
  */
-public class FurnitureBorderPanel extends JPanel implements ActionListener, AdjustmentListener
-{
+public class FurnitureBorderPanel extends JPanel implements ActionListener, AdjustmentListener {
+
+    private final I18N i18n = I18N.getInstance("skyprinter");
     FurnitureBorder border;
     Vector<FurnitureBorder> borders;
     JPanel bordersPanel;
@@ -56,7 +58,6 @@ public class FurnitureBorderPanel extends JPanel implements ActionListener, Adju
     JButton addButton;
     JLabel thicknessLabel, showLabel, fixedLabel, shadeLabel;
     String [] thicknesses = {"0.5","1.0","1.5","2.0","2.5","3.0","4.0","6.0"};
-    I18NPlug iPlug;
     GridBagDesigner gbp, gb;
     TitledBorder titledBorder = new TitledBorder(new BevelBorder(BevelBorder.RAISED), "Extra Borders");
     FurnitureDialog parent;
@@ -66,12 +67,11 @@ public class FurnitureBorderPanel extends JPanel implements ActionListener, Adju
     JTextField layerField;
     JTextField [] layerFields;
 
-    public FurnitureBorderPanel(FurnitureDialog parent, FurnitureBorder border, Vector<FurnitureBorder> borders, I18NPlug iPlug)
+    public FurnitureBorderPanel(FurnitureDialog parent, FurnitureBorder border, Vector<FurnitureBorder> borders)
     {
         this.border = border;
         this.borders = borders;
         this.parent = parent;
-        this.iPlug = iPlug;
         init();
         setBorder();
     }
@@ -115,8 +115,9 @@ public class FurnitureBorderPanel extends JPanel implements ActionListener, Adju
  		}
  		catch(NumberFormatException ex)
  		{
- 			JOptionPane.showMessageDialog(this,iPlug.get("JumpPrinter.Furniture.Message2")+": "+layerField.getText(),
- 	    			iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+ 			JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.Message2")+": "+layerField.getText(),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
  		}
         return border;
     }
@@ -138,8 +139,9 @@ public class FurnitureBorderPanel extends JPanel implements ActionListener, Adju
      		}
      		catch(NumberFormatException ex)
      		{
-     	    	JOptionPane.showMessageDialog(this,iPlug.get("JumpPrinter.Furniture.Message2")+" "+i+": "+layerFields[i].getText(),
-     	    			iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+     	    	JOptionPane.showMessageDialog(this,
+                i18n.get("JumpPrinter.Furniture.Message2")+" "+i+": "+layerFields[i].getText(),
+                i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
 
      		}
             //System.out.println("Getting border:"+aborder.show+","+aborder.fixed+","+aborder.thickness);
@@ -150,35 +152,35 @@ public class FurnitureBorderPanel extends JPanel implements ActionListener, Adju
     {
         gb = new GridBagDesigner(this);
 
-        showLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Show"));
+        showLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Show"));
         gb.setPosition(0,0);
         gb.setInsets(10,20,0,0);
         //gb.setAnchor(GridBagConstraints.NORTHWEST);
         //gb.setWeight(0.0,0.0);
         gb.addComponent(showLabel);
 
-        thicknessLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Border.LineWidth"));
+        thicknessLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Border.LineWidth"));
         gb.setPosition(1,0);
         gb.setInsets(10,10,0,0);
         //gb.setAnchor(GridBagConstraints.NORTHEAST);
         //gb.setWeight(0.0,0.0);
         gb.addComponent(thicknessLabel);
         
-        fixedLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Border.Fixed"));
+        fixedLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Border.Fixed"));
         gb.setPosition(6,0);
         gb.setInsets(10,10,0,0);
         gb.setAnchor(GridBagConstraints.NORTHWEST);
         gb.setWeight(1.0,0.0);
         gb.addComponent(fixedLabel);
         
-        layerLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Layer"));
+        layerLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Layer"));
         gb.setPosition(5,0);
         gb.setInsets(10,10,0,0);
         gb.setAnchor(GridBagConstraints.NORTHWEST);
         //gb.setWeight(1.0,0.0);
         gb.addComponent(layerLabel);
         
-        shadeLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Note.Shade"));
+        shadeLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Note.Shade"));
         gb.setPosition(3,0);
         gb.setInsets(10,10,0,0);
         gb.setAnchor(GridBagConstraints.NORTHWEST);
@@ -249,7 +251,7 @@ public class FurnitureBorderPanel extends JPanel implements ActionListener, Adju
         
         
         
-        addButton = new JButton(iPlug.get("JumpPrinter.Furniture.Add"));
+        addButton = new JButton(i18n.get("JumpPrinter.Furniture.Add"));
         gb.setPosition(6,4);
         gb.setInsets(10,0,10,10);
         gb.setAnchor(GridBagConstraints.SOUTHEAST);
@@ -342,7 +344,7 @@ public class FurnitureBorderPanel extends JPanel implements ActionListener, Adju
             //gb.setWeight(1.0,0.0);
             gbp.addComponent(layerFields[i]);
         	
-        	deleteButton[i] = new JButton(iPlug.get("JumpPrinter.Furniture.Delete"));
+        	deleteButton[i] = new JButton(i18n.get("JumpPrinter.Furniture.Delete"));
         	gbp.setPosition(6,i);
         	gbp.setInsets(10,10,0,10);
         	gbp.setAnchor(GridBagConstraints.NORTHWEST);

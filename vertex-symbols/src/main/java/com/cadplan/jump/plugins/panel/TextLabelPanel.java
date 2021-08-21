@@ -3,10 +3,6 @@ package com.cadplan.jump.plugins.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -19,7 +15,6 @@ import com.cadplan.designer.GridBagDesigner;
 import com.cadplan.jump.ui.VertexColorButton;
 import org.openjump.core.ui.plugin.layer.LayerPropertiesPlugIn.PropertyPanel;
 
-import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.utils.VertexParams;
 import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.feature.AttributeType;
@@ -27,7 +22,9 @@ import com.vividsolutions.jump.feature.FeatureSchema;
 import com.vividsolutions.jump.workbench.ui.renderer.style.LabelStyle;
 
 public class TextLabelPanel extends JPanel implements PropertyPanel {
+
 	private static final long serialVersionUID = 1L;
+	private final I18N i18n = I18N.getInstance("com.cadplan");
 	private ButtonGroup group;
 	private JCheckBox enabledCB;
 	private JCheckBox pointsCB;
@@ -68,22 +65,44 @@ public class TextLabelPanel extends JPanel implements PropertyPanel {
 
 	public void setNames() {
 		this.fontSizes = new String[]{"7", "8", "9", "10", "12", "14", "16", "18", "20", "24", "32", "48", "72"};
-		this.fontStyles = new String[]{I18NPlug.getI18N("VertexSymbols.Dialog.Plain"), I18NPlug.getI18N("VertexSymbols.Dialog.Bold"), I18NPlug.getI18N("VertexSymbols.Dialog.PlainItalic"), I18NPlug.getI18N("VertexSymbols.Dialog.BoldItalic")};
-		this.fontJust = new String[]{I18NPlug.getI18N("VertexSymbols.Dialog.Left"), I18NPlug.getI18N("VertexSymbols.Dialog.Centre"), I18NPlug.getI18N("VertexSymbols.Dialog.Right")};
-		this.positions = new String[]{I18NPlug.getI18N("VertexSymbols.Dialog.Centre"), I18NPlug.getI18N("VertexSymbols.Dialog.North"), I18NPlug.getI18N("VertexSymbols.Dialog.NorthEast"), I18NPlug.getI18N("VertexSymbols.Dialog.East"), I18NPlug.getI18N("VertexSymbols.Dialog.SouthEast"), I18NPlug.getI18N("VertexSymbols.Dialog.South"), I18NPlug.getI18N("VertexSymbols.Dialog.SouthWest"), I18NPlug.getI18N("VertexSymbols.Dialog.West"), I18NPlug.getI18N("VertexSymbols.Dialog.NorthWest")};
-		this.offsets = new String[]{I18NPlug.getI18N("VertexSymbols.Dialog.None"), I18NPlug.getI18N("VertexSymbols.Dialog.Auto"), I18NPlug.getI18N("VertexSymbols.Dialog.Value")};
-		this.borders = new String[]{I18NPlug.getI18N("VertexSymbols.Dialog.None"), I18NPlug.getI18N("VertexSymbols.Dialog.Boxed"), I18NPlug.getI18N("VertexSymbols.Dialog.Callout")};
+		this.fontStyles = new String[]{
+				i18n.get("VertexSymbols.Dialog.Plain"),
+				i18n.get("VertexSymbols.Dialog.Bold"),
+				i18n.get("VertexSymbols.Dialog.PlainItalic"),
+				i18n.get("VertexSymbols.Dialog.BoldItalic")};
+		this.fontJust = new String[]{
+				i18n.get("VertexSymbols.Dialog.Left"),
+				i18n.get("VertexSymbols.Dialog.Centre"),
+				i18n.get("VertexSymbols.Dialog.Right")};
+		this.positions = new String[]{
+				i18n.get("VertexSymbols.Dialog.Centre"),
+				i18n.get("VertexSymbols.Dialog.North"),
+				i18n.get("VertexSymbols.Dialog.NorthEast"),
+				i18n.get("VertexSymbols.Dialog.East"),
+				i18n.get("VertexSymbols.Dialog.SouthEast"),
+				i18n.get("VertexSymbols.Dialog.South"),
+				i18n.get("VertexSymbols.Dialog.SouthWest"),
+				i18n.get("VertexSymbols.Dialog.West"),
+				i18n.get("VertexSymbols.Dialog.NorthWest")};
+		this.offsets = new String[]{
+				i18n.get("VertexSymbols.Dialog.None"),
+				i18n.get("VertexSymbols.Dialog.Auto"),
+				i18n.get("VertexSymbols.Dialog.Value")};
+		this.borders = new String[]{
+				i18n.get("VertexSymbols.Dialog.None"),
+				i18n.get("VertexSymbols.Dialog.Boxed"),
+				i18n.get("VertexSymbols.Dialog.Callout")};
 	}
 
 	public void init() {
 		JPanel pan = new JPanel();
 		GridBagDesigner gb = new GridBagDesigner(pan);
-		this.enabledCB = new JCheckBox(I18N.get("ui.style.LabelStylePanel.enable-labelling"));
+		this.enabledCB = new JCheckBox(I18N.JUMP.get("ui.style.LabelStylePanel.enable-labelling"));
 		this.enabledCB.addActionListener(e -> TextLabelPanel.this.updateControls());
 		gb.setPosition(0, 0);
 		gb.setInsets(10, 10, 0, 0);
 		gb.addComponent(this.enabledCB);
-		this.attributeLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Attribute"));
+		this.attributeLabel = new JLabel(i18n.get("VertexSymbols.Dialog.Attribute"));
 		gb.setPosition(0, 1);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(13);
@@ -94,41 +113,41 @@ public class TextLabelPanel extends JPanel implements PropertyPanel {
 		gb.setSpan(2, 1);
 		gb.setFill(2);
 		gb.addComponent(this.attributeCombo);
-		this.fontLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Font"));
+		this.fontLabel = new JLabel(i18n.get("VertexSymbols.Dialog.Font"));
 		gb.setPosition(0, 2);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(13);
 		gb.addComponent(this.fontLabel);
 		String[] fontNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		this.fontNameCombo = new JComboBox(fontNames);
+		this.fontNameCombo = new JComboBox<>(fontNames);
 		gb.setPosition(1, 2);
 		gb.setInsets(10, 10, 0, 10);
 		gb.setSpan(2, 1);
 		gb.setFill(2);
 		gb.addComponent(this.fontNameCombo);
-		this.fontSizeCombo = new JComboBox(this.fontSizes);
+		this.fontSizeCombo = new JComboBox<>(this.fontSizes);
 		gb.setPosition(3, 2);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(13);
 		gb.addComponent(this.fontSizeCombo);
-		this.fontStyleCombo = new JComboBox(this.fontStyles);
+		this.fontStyleCombo = new JComboBox<>(this.fontStyles);
 		gb.setPosition(1, 3);
 		gb.setInsets(10, 10, 0, 10);
 		gb.addComponent(this.fontStyleCombo);
-		this.fontJustificationCombo = new JComboBox(this.fontJust);
+		this.fontJustificationCombo = new JComboBox<>(this.fontJust);
 		gb.setPosition(2, 3);
 		gb.setInsets(10, 10, 0, 0);
 		gb.addComponent(this.fontJustificationCombo);
-		this.positionLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Position"));
+		this.positionLabel = new JLabel(i18n.get("VertexSymbols.Dialog.Position"));
 		gb.setPosition(0, 4);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(13);
 		gb.addComponent(this.positionLabel);
-		this.positionCombo = new JComboBox(this.positions);
+		this.positionCombo = new JComboBox<>(this.positions);
 		gb.setPosition(1, 4);
 		gb.setInsets(10, 10, 0, 0);
 		gb.addComponent(this.positionCombo);
-		this.offsetCombo = new JComboBox(this.offsets);
+		this.offsetCombo = new JComboBox<>(this.offsets);
 		gb.setPosition(2, 4);
 		gb.setInsets(10, 10, 0, 10);
 		gb.addComponent(this.offsetCombo);
@@ -136,7 +155,7 @@ public class TextLabelPanel extends JPanel implements PropertyPanel {
 		gb.setPosition(3, 4);
 		gb.setInsets(10, 10, 0, 10);
 		gb.addComponent(this.offsetValueField);
-		this.backgroundLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.BackColor"));
+		this.backgroundLabel = new JLabel(i18n.get("VertexSymbols.Dialog.BackColor"));
 		gb.setPosition(0, 5);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(13);
@@ -146,7 +165,7 @@ public class TextLabelPanel extends JPanel implements PropertyPanel {
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(17);
 		gb.addComponent(this.bgColorButton);
-		this.foregroundLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.ForeColor"));
+		this.foregroundLabel = new JLabel(i18n.get("VertexSymbols.Dialog.ForeColor"));
 		gb.setPosition(2, 5);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(13);
@@ -156,42 +175,42 @@ public class TextLabelPanel extends JPanel implements PropertyPanel {
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(17);
 		gb.addComponent(this.fgColorButton);
-		this.borderLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Border"));
+		this.borderLabel = new JLabel(i18n.get("VertexSymbols.Dialog.Border"));
 		gb.setPosition(0, 6);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(13);
 		gb.addComponent(this.borderLabel);
-		this.borderStyleCombo = new JComboBox(this.borders);
+		this.borderStyleCombo = new JComboBox<>(this.borders);
 		gb.setPosition(1, 6);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(17);
 		gb.addComponent(this.borderStyleCombo);
-		this.fillCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.FillBackground"));
+		this.fillCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.FillBackground"));
 		gb.setPosition(2, 6);
 		gb.setInsets(10, 10, 0, 0);
 		gb.addComponent(this.fillCB);
-		this.scopeLabel = new JLabel(I18NPlug.getI18N("VertexSymbols.Dialog.Scope"));
+		this.scopeLabel = new JLabel(i18n.get("VertexSymbols.Dialog.Scope"));
 		gb.setPosition(0, 7);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(13);
 		gb.addComponent(this.scopeLabel);
-		this.pointsCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.Points"));
+		this.pointsCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.Points"));
 		gb.setPosition(1, 7);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(17);
 		gb.addComponent(this.pointsCB);
-		this.linesCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.Lines"));
+		this.linesCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.Lines"));
 		gb.setPosition(2, 7);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(17);
 		gb.addComponent(this.linesCB);
-		this.polysCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.Polygons"));
+		this.polysCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.Polygons"));
 		gb.setPosition(3, 7);
 		gb.setInsets(10, 10, 0, 0);
 		gb.setAnchor(17);
 		gb.addComponent(this.polysCB);
-		this.presetTextCB = new JCheckBox(I18NPlug.getI18N("VertexSymbols.Dialog.ActivateLabels"));
-		this.presetTextCB.setToolTipText(I18NPlug.getI18N("VertexSymbols.Dialog.ActivateLabels.tooltip"));
+		this.presetTextCB = new JCheckBox(i18n.get("VertexSymbols.Dialog.ActivateLabels"));
+		this.presetTextCB.setToolTipText(i18n.get("VertexSymbols.Dialog.ActivateLabels.tooltip"));
 		final LabelStyle labelStyle = VertexParams.selectedLayer.getLabelStyle();
 		this.presetTextCB.setSelected(true);
 		this.presetTextCB.addItemListener(arg0 -> {
@@ -336,20 +355,20 @@ public class TextLabelPanel extends JPanel implements PropertyPanel {
 	}
 
 	private int getFontStyle(String style) {
-		if (style.equals(I18NPlug.getI18N("VertexSymbols.Dialog.Plain"))) {
+		if (style.equals(i18n.get("VertexSymbols.Dialog.Plain"))) {
 			return 0;
-		} else if (style.equals(I18NPlug.getI18N("VertexSymbols.Dialog.Bold"))) {
+		} else if (style.equals(i18n.get("VertexSymbols.Dialog.Bold"))) {
 			return 1;
-		} else if (style.equals(I18NPlug.getI18N("VertexSymbols.Dialog.PlainItalic"))) {
+		} else if (style.equals(i18n.get("VertexSymbols.Dialog.PlainItalic"))) {
 			return 2;
 		} else {
-			return style.equals(I18NPlug.getI18N("VertexSymbols.Dialog.BoldItalic")) ? 3 : 0;
+			return style.equals(i18n.get("VertexSymbols.Dialog.BoldItalic")) ? 3 : 0;
 		}
 	}
 
 	@Override
 	public String getTitle() {
-		return I18N.get("ui.style.LabelStylePanel.labels");
+		return I18N.JUMP.get("ui.style.LabelStylePanel.labels");
 	}
 
 	@Override

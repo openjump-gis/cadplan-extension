@@ -27,7 +27,6 @@ public class OnLineHelp extends JDialog implements ActionListener, WindowListene
   URL url = null;
   Window parent;
   String helpFileName = "JumpPrinterHelp.html";
-  //File inFile;
 
   public OnLineHelp(JDialog parent, String bookmark) {
     super(parent, "Jump Printer Help", false);
@@ -39,13 +38,7 @@ public class OnLineHelp extends JDialog implements ActionListener, WindowListene
     init();
   }
 
-  //    public OnlineHelp(JFrame parent, String helpFile)
-//    {
-//        super(parent, "P-Coder: Java API");
-//        this.parent = parent;
-//        apiSelected = true;
-//        init();
-//    }
+
   public void init() {
     // System.out.println("inFile: "+inFile.getAbsolutePath());
     setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

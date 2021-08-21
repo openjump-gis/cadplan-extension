@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.MenuElement;
 
+import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.locationtech.jts.geom.Envelope;
@@ -182,11 +183,11 @@ public class SaveViewUtils {
 			labelArea.setOpaque(false);
 			labelArea.setFont(new JLabel().getFont());
 			labelArea
-			.setText(I18N
+			.setText(I18N.JUMP
 					.get("org.openjump.core.ui.plugin.file.SaveImageAsSVGPlugIn.large-dataset-message"));
 			OKCancelDialog dialog = new OKCancelDialog(
 					wContext.getWorkbench().getFrame(),
-					I18N.get("org.openjump.core.ui.plugin.file.SaveImageAsSVGPlugIn.warning-message-title"),
+					I18N.JUMP.get("org.openjump.core.ui.plugin.file.SaveImageAsSVGPlugIn.warning-message-title"),
 					true, labelArea, null);
 			dialog.setVisible(true);
 			if (!dialog.wasOKPressed())
@@ -241,19 +242,19 @@ public class SaveViewUtils {
 	public static void saveAsRaster(RenderedImage image, String format, File file)
 			throws IOException {
 		boolean writerFound = ImageIO.write(image, format, file);
-		Assert.isTrue( writerFound, I18N.get("ui.plugin.SaveImageAsPlugIn.cannot-find-writer-for-image-format")+" '"
+		Assert.isTrue( writerFound, I18N.JUMP.get("ui.plugin.SaveImageAsPlugIn.cannot-find-writer-for-image-format")+" '"
 				+ format + "'");
 	}
 
 
 
-	public static void removeMainMenuItem(String[] menuPath, String menuItemName) {
+	public static void removeMainMenuItem(String[] menuPath,
+																				String menuItemName, PlugInContext context) {
 
-		JMenu parentMenu = FeatureInstaller.getInstance().menuBarMenu(menuPath[0]);
+		JMenu parentMenu = context.getFeatureInstaller().menuBarMenu(menuPath[0]);
 		if (menuPath.length > 1) {
 			for (int i = 1; i < menuPath.length; i++) {
 				String menuPathName = menuPath[i];
-				FeatureInstaller.getInstance();
 				parentMenu = (JMenu) childMenuItem(menuPathName, parentMenu);
 			}
 		}
@@ -267,8 +268,8 @@ public class SaveViewUtils {
 	}
 
 
-	public static void removeMenu(String[] menuPath) {
-		JMenu parentMenu = FeatureInstaller.getInstance().menuBarMenu(menuPath[0]);
+	public static void removeMenu(PlugInContext context, String[] menuPath) {
+		JMenu parentMenu = context.getFeatureInstaller().menuBarMenu(menuPath[0]);
 		if (menuPath.length > 1)
 			for (int i = 1; i < menuPath.length; i++) {
 				String menuPathName = menuPath[i];

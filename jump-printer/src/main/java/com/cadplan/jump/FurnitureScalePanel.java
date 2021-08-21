@@ -22,6 +22,7 @@
 package com.cadplan.jump;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 
 import javax.swing.*;
 
@@ -40,6 +41,8 @@ import java.text.DecimalFormat;
  */
 public class FurnitureScalePanel extends JPanel implements ItemListener, ActionListener {
 
+  private final I18N i18n = I18N.getInstance("skyprinter");
+
   FurnitureScale scaleItem;
   JLabel scaleLabel, rangeLabel, sizeLabel, numberLabel, fontLabel, unitsLabel, layerLabel;
 
@@ -49,38 +52,37 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
   JComboBox<String> fontNameCombo, fontSizeCombo, fontStyleCombo;
   ColorButton colorButton;
   Button color1Button, color2Button;
-  I18NPlug iPlug;
   String[] styles;
   String[] sizes = {"6", "7", "8", "9", "10", "12", "14", "16", "18", "20", "24", "28", "32", "36", "48", "64", "72", "84", "96"};
 
-  public FurnitureScalePanel(FurnitureScale scaleItem, I18NPlug iPlug) {
+  public FurnitureScalePanel(FurnitureScale scaleItem) {
     this.scaleItem = scaleItem;
-    this.iPlug = iPlug;
-    styles = new String[]{iPlug.get("JumpPrinter.Furniture.Title.Plain"),
-        iPlug.get("JumpPrinter.Furniture.Title.PlainItalic"),
-        iPlug.get("JumpPrinter.Furniture.Title.Bold"),
-        iPlug.get("JumpPrinter.Furniture.Title.BoldItalic")};
+    styles = new String[]{
+        i18n.get("JumpPrinter.Furniture.Title.Plain"),
+        i18n.get("JumpPrinter.Furniture.Title.PlainItalic"),
+        i18n.get("JumpPrinter.Furniture.Title.Bold"),
+        i18n.get("JumpPrinter.Furniture.Title.BoldItalic")};
     init();
   }
 
   public void init() {
     GridBagDesigner gb = new GridBagDesigner(this);
 
-    showCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Show"));
+    showCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Show"));
     gb.setPosition(0, 0);
     gb.setInsets(10, 10, 0, 0);
     //gb.setWeight(1.0,0.0);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(showCB);
 
-    scaleLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Scale.Scale") + formatScale(scaleItem.scale));
+    scaleLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Scale.Scale") + formatScale(scaleItem.scale));
     gb.setPosition(1, 0);
     gb.setInsets(10, 0, 0, 0);
     gb.setAnchor(GridBagConstraints.WEST);
     //gb.setWeight(1.0,0.0);
     gb.addComponent(scaleLabel);
 
-    fontLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Title.Font"));
+    fontLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Title.Font"));
     gb.setPosition(0, 2);
     gb.setInsets(10, 10, 0, 10);
     gb.setAnchor(GridBagConstraints.EAST);
@@ -127,7 +129,7 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
     gb.addComponent(colorButton);
 
 
-    rangeLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Scale.Range"));
+    rangeLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Scale.Range"));
     gb.setPosition(0, 1);
     gb.setInsets(10, 10, 0, 10);
     gb.setAnchor(GridBagConstraints.EAST);
@@ -141,7 +143,7 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
     //gb.setWeight(1.0,0.0);
     gb.addComponent(rangeField);
 
-    autoCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Scale.AutoRange"));
+    autoCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Scale.AutoRange"));
     gb.setPosition(4, 1);
     gb.setInsets(10, 0, 0, 0);
     gb.setSpan(1, 1);
@@ -179,7 +181,7 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
     //gb.addComponent(intervalField);
 
 
-    numberLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Scale.Number"));
+    numberLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Scale.Number"));
     gb.setPosition(0, 4);
     gb.setInsets(10, 10, 0, 10);
     gb.setAnchor(GridBagConstraints.WEST);
@@ -191,7 +193,7 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(numberScaleField);
 
-    unitsLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Scale.Units"));
+    unitsLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Scale.Units"));
     gb.setPosition(2, 4);
     gb.setInsets(10, 10, 0, 10);
     gb.setAnchor(GridBagConstraints.WEST);
@@ -204,18 +206,18 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
     gb.setFill(GridBagConstraints.HORIZONTAL);
     gb.addComponent(unitsField);
 
-    showRatioCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Scale.ShowRatio"));
+    showRatioCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Scale.ShowRatio"));
     gb.setPosition(4, 4);
     gb.setInsets(10, 0, 0, 0);
     gb.addComponent(showRatioCB);
 
-    showUnitCB = new JCheckBox(iPlug.get("JumpPrinter.Furniture.Scale.ShowUnits"));
+    showUnitCB = new JCheckBox(i18n.get("JumpPrinter.Furniture.Scale.ShowUnits"));
     gb.setPosition(5, 4);
     gb.setInsets(10, 0, 0, 0);
     gb.setSpan(2, 1);
     gb.addComponent(showUnitCB);
 
-    sizeLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Note.Size"));
+    sizeLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Note.Size"));
     gb.setPosition(0, 5);
     gb.setInsets(10, 0, 0, 10);
     gb.setAnchor(GridBagConstraints.EAST);
@@ -227,7 +229,7 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(sizeField);
 
-    layerLabel = new JLabel(iPlug.get("JumpPrinter.Furniture.Layer"));
+    layerLabel = new JLabel(i18n.get("JumpPrinter.Furniture.Layer"));
     gb.setPosition(2, 5);
     gb.setInsets(10, 10, 0, 10);
     gb.setAnchor(GridBagConstraints.EAST);
@@ -294,16 +296,17 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
       //interval = Double.parseDouble(intervalField.getText());
       numberScale = Integer.parseInt(numberScaleField.getText());
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Scale.Message2"),
-          iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this, i18n.get("JumpPrinter.Furniture.Scale.Message2"),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
       OK = false;
     }
     //scaleItem.layerNumber = Integer.parseInt(layerField.getText());
     try {
       scaleItem.layerNumber = Integer.parseInt(layerField.getText());
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Message2") + ": " + layerField.getText(),
-          iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.Message2") + ": " + layerField.getText(),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
 
     }
     //if(OK && range <= 0.0)
@@ -325,12 +328,14 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
       if (size > 0.1 && size <= 10.0) {
         scaleItem.sizeFactor = size;
       } else {
-        JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Message1"),
-            iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,
+            i18n.get("JumpPrinter.Furniture.Message1"),
+            i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
       }
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Message1"),
-          iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.Message1"),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
       OK = false;
     }
 
@@ -397,18 +402,18 @@ public class FurnitureScalePanel extends JPanel implements ItemListener, ActionL
 
   private String styleString(int style) {
     String s;
-    if (style == Font.PLAIN) s = iPlug.get("JumpPrinter.Furniture.Title.Plain");
-    else if (style == Font.BOLD) s = iPlug.get("JumpPrinter.Furniture.Title.Bold");
-    else if (style == (Font.PLAIN + Font.ITALIC)) s = iPlug.get("JumpPrinter.Furniture.Title.PlainItalic");
-    else s = iPlug.get("JumpPrinter.Furniture.Title.BoldItalic");
+    if (style == Font.PLAIN) s = i18n.get("JumpPrinter.Furniture.Title.Plain");
+    else if (style == Font.BOLD) s = i18n.get("JumpPrinter.Furniture.Title.Bold");
+    else if (style == (Font.PLAIN + Font.ITALIC)) s = i18n.get("JumpPrinter.Furniture.Title.PlainItalic");
+    else s = i18n.get("JumpPrinter.Furniture.Title.BoldItalic");
     return s;
   }
 
   private int styleNumber(String style) {
     int n;
-    if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.Plain"))) n = Font.PLAIN;
-    else if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.Bold"))) n = Font.BOLD;
-    else if (style.equals(iPlug.get("JumpPrinter.Furniture.Title.PlainItalic"))) n = (Font.PLAIN + Font.ITALIC);
+    if (style.equals(i18n.get("JumpPrinter.Furniture.Title.Plain"))) n = Font.PLAIN;
+    else if (style.equals(i18n.get("JumpPrinter.Furniture.Title.Bold"))) n = Font.BOLD;
+    else if (style.equals(i18n.get("JumpPrinter.Furniture.Title.PlainItalic"))) n = (Font.PLAIN + Font.ITALIC);
     else n = (Font.BOLD + Font.ITALIC);
 
     return n;

@@ -21,6 +21,7 @@
  */
 package com.cadplan.jump;
 
+import com.vividsolutions.jump.I18N;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.*;
@@ -54,6 +55,7 @@ import java.io.*;
 
 public class XMLconverter extends DefaultHandler {
 
+  private static final I18N i18n = I18N.getInstance("skyprinter");
   private boolean debug = false;
   private final String filename;
   private String dir;
@@ -66,18 +68,14 @@ public class XMLconverter extends DefaultHandler {
   private final Vector<FurnitureNote> notes = new Vector<>();
   private final Vector<FurnitureBorder> borders = new Vector<>();
   private final Vector<FurnitureImage> imageItems = new Vector<>();
-  private final I18NPlug iPlug;
 
-
-  public XMLconverter(String filename, I18NPlug iPlug) {
+  public XMLconverter(String filename) {
     this.filename = filename;
-    this.iPlug = iPlug;
   }
 
-  public XMLconverter(String dir, String fname, I18NPlug iPlug) {
+  public XMLconverter(String dir, String fname) {
     this.filename = dir + File.separator + fname;
     this.dir = dir;
-    this.iPlug = iPlug;
     //System.out.println("XML Dir:"+dir+"  File:"+fname);
   }
 
@@ -529,7 +527,7 @@ public class XMLconverter extends DefaultHandler {
       scaleItem.units = units;
       scaleItem.layerNumber = layer;
 
-      scaleItem.setIPlug(iPlug);
+      //scaleItem.setIPlug(iPlug);
       blackboard.put("ScaleItem", scaleItem);
     }
     if (qName.equals("border")) {

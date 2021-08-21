@@ -27,7 +27,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import com.cadplan.language.I18NPlug;
 import com.cadplan.jump.plugins.panel.TextLabelPanel;
 import com.cadplan.jump.plugins.panel.VertexColorThemingPanel;
 import com.cadplan.jump.plugins.panel.VertexParametersPanel;
@@ -49,8 +48,11 @@ import org.locationtech.jts.geom.CoordinateList;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.linearref.LengthIndexedLine;
 
+
 public class StyleUtils {
+
 	public static WorkbenchFrame frameInstance = JUMPWorkbench.getInstance().getFrame();
+	private static final I18N i18n = I18N.getInstance("com.cadplan");
 
 	/**
 	 * Gets list of values of an attribute
@@ -156,28 +158,28 @@ public class StyleUtils {
 		try {
 			VertexParams.size = Integer.parseInt(parametersPanel.sizeField.getText());
 		} catch (NumberFormatException var8) {
-			JOptionPane.showMessageDialog(frameInstance, I18NPlug.getI18N("VertexSymbols.Dialog.Warning1"), "Warning...", 2);
+			JOptionPane.showMessageDialog(frameInstance, i18n.get("VertexSymbols.Dialog.Warning1"), "Warning...", 2);
 			return false;
 		}
 
 		try {
 			VertexParams.orientation = Double.parseDouble(parametersPanel.orienField.getText());
 		} catch (NumberFormatException var7) {
-			JOptionPane.showMessageDialog(frameInstance, I18NPlug.getI18N("VertexSymbols.Dialog.Warning2"), "Warning...", 2);
+			JOptionPane.showMessageDialog(frameInstance, i18n.get("VertexSymbols.Dialog.Warning2"), "Warning...", 2);
 			return false;
 		}
 
 		try {
 			VertexParams.baseScale = Double.parseDouble(parametersPanel.baseScaleField.getText());
 		} catch (NumberFormatException var6) {
-			JOptionPane.showMessageDialog(frameInstance, I18NPlug.getI18N("VertexSymbols.Dialog.Warning3"), "Warning...", 2);
+			JOptionPane.showMessageDialog(frameInstance, i18n.get("VertexSymbols.Dialog.Warning3"), "Warning...", 2);
 			return false;
 		}
 
 		try {
 			VertexParams.symbolName = getSymbolName(symbologyPanel);
 		} catch (NumberFormatException var5) {
-			JOptionPane.showMessageDialog(frameInstance, I18NPlug.getI18N("VertexSymbols.Dialog.Warning4"), "Warning...", 2);
+			JOptionPane.showMessageDialog(frameInstance, i18n.get("VertexSymbols.Dialog.Warning4"), "Warning...", 2);
 			return false;
 		}
 
@@ -187,7 +189,7 @@ public class StyleUtils {
 			VertexParams.distance=((Number)parametersPanel.distanceField.getValue()).intValue();
 			//	VertexParams.distance= Integer.parseInt(parametersPanel.distanceField.getText());
 		} catch (NumberFormatException var8) {
-			JOptionPane.showMessageDialog(frameInstance, I18NPlug.getI18N("VertexSymbols.Dialog.Warning1"), "Warning...", 2);
+			JOptionPane.showMessageDialog(frameInstance, i18n.get("VertexSymbols.Dialog.Warning1"), "Warning...", 2);
 			return false;
 		}
 
@@ -195,7 +197,7 @@ public class StyleUtils {
 			VertexParams.offset=((Number)parametersPanel.offsetField.getValue()).doubleValue();
 			//	VertexParams.offset= Double.parseDouble(parametersPanel.offsetField.getText());
 		} catch (NumberFormatException var6) {
-			JOptionPane.showMessageDialog(frameInstance, I18NPlug.getI18N("VertexSymbols.Dialog.Warning3"), "Warning...", 2);
+			JOptionPane.showMessageDialog(frameInstance, i18n.get("VertexSymbols.Dialog.Warning3"), "Warning...", 2);
 			return false;
 		}
 		VertexParams.rotate = parametersPanel.rotationCB.isSelected();
@@ -348,7 +350,7 @@ public class StyleUtils {
 					fc.setSelectedFontStyle(textArea.getFont().getStyle());
 					fc.setSelectedFontFamily(textArea.getFont().getFamily());
 					fc.setSampleTextField(textArea.getText());
-					fc.showDialog(textArea.getParent(), I18N.get("org.openjump.core.ui.plugin.style.LegendPlugIn.modify-label"));
+					fc.showDialog(textArea.getParent(), I18N.JUMP.get("org.openjump.core.ui.plugin.style.LegendPlugIn.modify-label"));
 					Font labelFont = fc.getSelectedFont();
 					if (fc.wasOKPressed()) {
 						textArea.setFont(labelFont);

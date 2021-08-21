@@ -21,6 +21,8 @@
  */
 package com.cadplan.jump;
 
+import com.vividsolutions.jump.I18N;
+
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.StringTokenizer;
@@ -34,6 +36,7 @@ import javax.swing.JOptionPane;
  * Copyright 2005 Geoffrey G Roy.
  */
 public class FurnitureScale extends Furniture {
+
   boolean debug = false;
   double range;
   double interval;
@@ -44,7 +47,7 @@ public class FurnitureScale extends Furniture {
   int numdiv = 10;
   double rangediv = 1.0;
   double sizeFactor = 1.0;
-  I18NPlug iPlug;
+  I18N i18n;
   int numberScale = 1;
   String rangeSpec = "";
   String units = "";
@@ -68,12 +71,10 @@ public class FurnitureScale extends Furniture {
     color = Color.BLACK;
     numberScale = 1;
     layerNumber = 40;
-
-
   }
 
-  public void setIPlug(I18NPlug iPlug) {
-    this.iPlug = iPlug;
+  public void setIPlug(I18N i18n) {
+    this.i18n = i18n;
     //System.out.println("Setting iPlug: "+iPlug.get("JumpPrinter.Furniture.Scale.Scale"));
   }
 
@@ -167,8 +168,9 @@ public class FurnitureScale extends Furniture {
 
       }
     } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, iPlug.get("JumpPrinter.Furniture.Scale.Message3"),
-          iPlug.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,
+          i18n.get("JumpPrinter.Furniture.Scale.Message3"),
+          i18n.get("JumpPrinter.Error"), JOptionPane.ERROR_MESSAGE);
 
     }
     //System.out.println("scaleLeader:"+scaleLeader+"  value="+leaderInterval);
@@ -338,7 +340,7 @@ public class FurnitureScale extends Furniture {
     g.setColor(color);
     String scaleLabel;
     try {
-      scaleLabel = iPlug.get("JumpPrinter.Furniture.Scale.Scale");
+      scaleLabel = i18n.get("JumpPrinter.Furniture.Scale.Scale");
       //System.out.println("Scale label:"+scaleLabel);
     } catch (NullPointerException ex) {
       //System.out.println("iPlug not found");

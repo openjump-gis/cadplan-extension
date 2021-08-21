@@ -14,7 +14,9 @@ import com.cadplan.designer.GridBagDesigner;
 import com.cadplan.jump.utils.VertexParams;
 import com.cadplan.vertices.renderer.style.ImageVertexStyle;
 
+
 public class ImagePanel extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 	ButtonGroup group;
 	private JRadioButton[] imageRB;

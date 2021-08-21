@@ -35,89 +35,78 @@ import java.awt.image.BufferedImage;
  * Time: 10:53:12
  * Copyright 2005 Geoffrey G Roy.
  */
-public class MyImageFillPattern extends BasicFillPattern //ImageFillPattern
-{
-    private boolean debug = false;
-    private static final String FILENAME_KEY = "FILENAME";
+public class MyImageFillPattern extends BasicFillPattern {
+  private boolean debug = false;
+  private static final String FILENAME_KEY = "FILENAME";
 
-    public MyImageFillPattern( String imageName)
-    {
+  public MyImageFillPattern(String imageName) {
 
-         super(new Blackboard().putAll(CollectionUtil.createMap(
-                    new Object[]
-                    {
-                        BasicFillPattern.COLOR_KEY, Color.black, 
-                        FILENAME_KEY, imageName
-                    })));
-
-        if(debug) System.out.println("MyImageFillPattern constructor 2:"); //   width="+this.image.getWidth(null));
-    }
-    /**
-     * Parameterless constructor for Java2XML
-     */
-    public MyImageFillPattern()
-    {
-         if(debug) System.out.println("MyImageFillPattern constructor 0:");
-
-    }
-
-    public MyImageFillPattern clone()
-    {
-         if(debug) System.out.println("Cloning MyImageFillPattern");
-        String imageName = (String) getProperties().get(FILENAME_KEY);
-        MyImageFillPattern fillPattern = new MyImageFillPattern(imageName);
-        fillPattern.setProperties((getProperties().clone()));
-
-        return fillPattern;
-    }
-
-
-    public boolean equals(Object obj)
-    {
-        //System.out.println("Equality test");
-        if(obj == null ) return false;
-        if(obj instanceof MyImageFillPattern)
-        {
-            String imageName = (String) getProperties().get(FILENAME_KEY);
-            //if (((MyImageFillPattern)obj).imageName == null) return false;
-            //if(((MyImageFillPattern)obj).imageName.equals(imageName))
-            if(imageName.equals(((MyImageFillPattern)obj).getProperties().get(FILENAME_KEY)))
+    super(new Blackboard().putAll(CollectionUtil.createMap(
+        new Object[]
             {
-                if(debug) System.out.println("Equality: true");
-                return true;
-            }
+                BasicFillPattern.COLOR_KEY, Color.black,
+                FILENAME_KEY, imageName
+            })));
 
-        }
-       return false;
+    if (debug) System.out.println("MyImageFillPattern constructor 2:"); //   width="+this.image.getWidth(null));
+  }
+
+  /**
+   * Parameterless constructor for Java2XML
+   */
+  public MyImageFillPattern() {
+    if (debug) System.out.println("MyImageFillPattern constructor 0:");
+
+  }
+
+  public MyImageFillPattern clone() {
+    if (debug) System.out.println("Cloning MyImageFillPattern");
+    String imageName = (String) getProperties().get(FILENAME_KEY);
+    MyImageFillPattern fillPattern = new MyImageFillPattern(imageName);
+    fillPattern.setProperties((getProperties().clone()));
+
+    return fillPattern;
+  }
+
+
+  public boolean equals(Object obj) {
+    //System.out.println("Equality test");
+    if (obj == null) return false;
+    if (obj instanceof MyImageFillPattern) {
+      String imageName = (String) getProperties().get(FILENAME_KEY);
+      //if (((MyImageFillPattern)obj).imageName == null) return false;
+      //if(((MyImageFillPattern)obj).imageName.equals(imageName))
+      if (imageName.equals(((MyImageFillPattern) obj).getProperties().get(FILENAME_KEY))) {
+        if (debug) System.out.println("Equality: true");
+        return true;
+      }
+
+    }
+    return false;
+  }
+
+  public BufferedImage createImage(Blackboard properties) {
+
+    String imageName = (String) getProperties().get(FILENAME_KEY);
+    Image image = null;
+    for (int i = 0; i < FillPatternParams.imageNames.length; i++) {
+      if (FillPatternParams.imageNames[i].equals(imageName)) image = FillPatternParams.images[i];
+    }
+    BufferedImage bufferedImage;
+    if (image == null) {
+      System.out.println("createImage: NULL image");
+      bufferedImage = new BufferedImage(100, 25, BufferedImage.TYPE_INT_ARGB);
+      Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
+      g.setColor(Color.BLACK);
+      g.drawString("No Pattern", 0, 20);
+    } else {
+      bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+      Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
+      g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+          ((Color) getProperties().get(COLOR_KEY)).getAlpha() / 255f));
+      g.drawImage(image, 0, 0, null);
     }
 
-    public BufferedImage createImage(Blackboard properties)
-    {
-
-        String imageName = (String) getProperties().get(FILENAME_KEY);
-        Image image = null;
-        for(int i=0; i < FillPatternParams.imageNames.length; i++)
-        {
-            if(FillPatternParams.imageNames[i].equals(imageName)) image = FillPatternParams.images[i];
-        }
-        BufferedImage bufferedImage;
-        if(image == null)
-        {
-            System.out.println("createImage: NULL image");
-            bufferedImage = new BufferedImage(100,  25, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
-            g.setColor(Color.BLACK);
-            g.drawString("No Pattern",0,20);
-        }
-        else
-        {
-            bufferedImage = new BufferedImage(image.getWidth(null),  image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-                    ((Color) getProperties().get(COLOR_KEY)).getAlpha() / 255f));
-            g.drawImage(image, 0, 0, null);
-        }
-
-        return bufferedImage;
-    }
+    return bufferedImage;
+  }
 }

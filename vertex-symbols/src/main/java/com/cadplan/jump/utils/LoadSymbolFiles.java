@@ -32,7 +32,9 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 
+
 public class LoadSymbolFiles extends Component implements FilenameFilter, Runnable {
+
 	private static final long serialVersionUID = 1L;
 	boolean debug = false;
 	String[] imageNames = null;

@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import org.saig.core.gui.swing.sldeditor.util.FormUtils;
 
+
 public class WKTPanel extends JPanel {
+
    private static final long serialVersionUID = 1L;
    ButtonGroup group;
    Color lineColor;

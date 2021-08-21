@@ -39,7 +39,7 @@ public class ColorPanel extends JPanel {
 		GridLayout layout = new GridLayout(0, 1);
 		this.setLayout(layout);
 
-		this.fillColorLabel = new JLabel(I18N.get("ui.style.BasicStylePanel.fill"));
+		this.fillColorLabel = new JLabel(I18N.JUMP.get("ui.style.BasicStylePanel.fill"));
 		this.fillColorButton = new VertexColorButton(fillColor);
 		this.fillColorButton.addActionListener(new ActionListener() {
 			@Override
@@ -50,13 +50,13 @@ public class ColorPanel extends JPanel {
 		JPanel fillPane = new JPanel(new GridBagLayout());
 		fillPane.add(this.fillColorLabel, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, 17, 0, new Insets(0, 0, 0, 0), 0, 0));
 		fillPane.add(this.fillColorButton, new GridBagConstraints(1, 0, 1, 1, 0.0D, 0.0D, 17, 0, new Insets(0, 0, 0, 0), 0, 0));
-		this.lineColorLabel = new JLabel(I18N.get("ui.style.BasicStylePanel.line"));
+		this.lineColorLabel = new JLabel(I18N.JUMP.get("ui.style.BasicStylePanel.line"));
 		this.lineColorButton = new VertexColorButton(lineColor);
 		this.lineColorButton.addActionListener(e -> ColorPanel.this.lineColorChooserPanel_actionPerformed(e));
 		JPanel linePane = new JPanel(new GridBagLayout());
 		linePane.add(this.lineColorLabel, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, 17, 0, new Insets(0, 0, 0, 0), 0, 0));
 		linePane.add(this.lineColorButton, new GridBagConstraints(1, 0, 1, 1, 0.0D, 0.0D, 17, 0, new Insets(0, 0, 0, 0), 0, 0));
-		this.synchronizeCheckBox.setText(I18N.get("org.openjump.core.ui.plugin.view.ViewOptionsPlugIn.Synchronize"));
+		this.synchronizeCheckBox.setText(I18N.JUMP.get("org.openjump.core.ui.plugin.view.ViewOptionsPlugIn.Synchronize"));
 		this.synchronizeCheckBox.addActionListener(e -> ColorPanel.this.synchronizeCheckBox_actionPerformed(e));
 		//GridLayout layout = new GridLayout(0, 2);
 		JPanel fillerPane = new JPanel();

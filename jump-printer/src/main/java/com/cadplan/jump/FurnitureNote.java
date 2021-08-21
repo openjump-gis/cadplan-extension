@@ -37,6 +37,7 @@ import java.util.StringTokenizer;
  * Copyright 2005 Geoffrey G Roy.
  */
 public class FurnitureNote extends Furniture {
+
   public String text;
   public Font font;
   public int justify;

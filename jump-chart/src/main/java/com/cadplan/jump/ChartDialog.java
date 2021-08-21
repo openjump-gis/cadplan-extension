@@ -32,6 +32,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -49,6 +50,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.ui.OKCancelApplyPanel;
 
 /**
@@ -56,10 +58,9 @@ import com.vividsolutions.jump.workbench.ui.OKCancelApplyPanel;
  */
 public class ChartDialog extends JDialog implements ActionListener,
         ItemListener {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = 1L;
+    private final I18N i18n = I18N.getInstance("jump_chart");
     boolean debug = false;
     JLabel nameLabel, attributeLabel, typeLabel, sizeLabel, scaleLabel,
             widthLabel, originLabel, underLabel;
@@ -77,17 +78,15 @@ public class ChartDialog extends JDialog implements ActionListener,
     ButtonGroup sizeGroup, scaleGroup;
     Vector<ChartAttribute> attributes;
     GridBagDesigner gb;
-    I18NPlug iPlug;
     int currentType = ChartParams.chartType;
     String[] underLabelOptions;
     JPanel mainPanel = new JPanel();
     OKCancelApplyPanel okPanel = new OKCancelApplyPanel();
 
     public ChartDialog(String layerName, Vector<ChartAttribute> attributes,
-            I18NPlug iPlug) {
+            I18N i18n) {
         super(new JFrame(), "Chart Dialog", true);
         this.attributes = attributes;
-        this.iPlug = iPlug;
         ChartParams.reloadDialog = false;
 
         // System.out.println("Creating ChartDialog" + "  Attributes size=" +
@@ -140,7 +139,7 @@ public class ChartDialog extends JDialog implements ActionListener,
     public void init() {
         mainPanel = new JPanel(new GridBagLayout());
         gb = new GridBagDesigner(mainPanel);
-        nameLabel = new JLabel(iPlug.get("JumpChart.Dialog.SelectedLayer"));
+        nameLabel = new JLabel(i18n.get("JumpChart.Dialog.SelectedLayer"));
         gb.setPosition(0, 0);
         gb.setInsets(10, 10, 0, 5);
         gb.addComponent(nameLabel);
@@ -153,26 +152,26 @@ public class ChartDialog extends JDialog implements ActionListener,
         gb.setFill(GridBagConstraints.HORIZONTAL);
         gb.addComponent(nameField);
 
-        attributeLabel = new JLabel(iPlug.get("JumpChart.Dialog.Attributes"));
+        attributeLabel = new JLabel(i18n.get("JumpChart.Dialog.Attributes"));
         gb.setPosition(0, 1);
         gb.setInsets(5, 10, 0, 5);
         gb.addComponent(attributeLabel);
 
-        setAllButton = new JButton(iPlug.get("JumpChart.Dialog.SelectAll"));
+        setAllButton = new JButton(i18n.get("JumpChart.Dialog.SelectAll"));
         gb.setPosition(0, 2);
         gb.setInsets(5, 10, 0, 5);
         gb.setFill(GridBagConstraints.HORIZONTAL);
         gb.addComponent(setAllButton);
         setAllButton.addActionListener(this);
 
-        clearAllButton = new JButton(iPlug.get("JumpChart.Dialog.ClearAll"));
+        clearAllButton = new JButton(i18n.get("JumpChart.Dialog.ClearAll"));
         gb.setPosition(0, 3);
         gb.setInsets(5, 10, 0, 5);
         gb.setFill(GridBagConstraints.HORIZONTAL);
         gb.addComponent(clearAllButton);
         clearAllButton.addActionListener(this);
 
-        orderButton = new JButton(iPlug.get("JumpChart.Dialog.Order"));
+        orderButton = new JButton(i18n.get("JumpChart.Dialog.Order"));
         gb.setPosition(0, 4);
         gb.setInsets(5, 10, 0, 5);
         gb.setFill(GridBagConstraints.HORIZONTAL);
@@ -182,7 +181,7 @@ public class ChartDialog extends JDialog implements ActionListener,
         createSelectPanel();
         addAttributePanel();
 
-        typeLabel = new JLabel(iPlug.get("JumpChart.Dialog.ChartType"));
+        typeLabel = new JLabel(i18n.get("JumpChart.Dialog.ChartType"));
         gb.setPosition(0, 6);
         gb.setInsets(5, 10, 0, 5);
         gb.addComponent(typeLabel);
@@ -194,13 +193,13 @@ public class ChartDialog extends JDialog implements ActionListener,
         typeCombo.setSelectedIndex(ChartParams.chartType);
         typeCombo.addActionListener(this);
 
-        clockwiseCB = new JCheckBox(iPlug.get("JumpChart.Dialog.Clockwise"));
+        clockwiseCB = new JCheckBox(i18n.get("JumpChart.Dialog.Clockwise"));
         gb.setPosition(2, 6);
         gb.setInsets(5, 0, 0, 5);
         gb.addComponent(clockwiseCB);
         clockwiseCB.setSelected(ChartParams.clockwise);
 
-        legendCB = new JCheckBox(iPlug.get("JumpChart.Dialog.Legend"));
+        legendCB = new JCheckBox(i18n.get("JumpChart.Dialog.Legend"));
         gb.setPosition(3, 6);
         gb.setInsets(5, 0, 0, 5);
         gb.setAnchor(GridBagConstraints.WEST);
@@ -213,24 +212,24 @@ public class ChartDialog extends JDialog implements ActionListener,
         // gb.addComponent(orderCB);
         // orderCB.setSelected(ChartParams.ordered);
 
-        sizeLabel = new JLabel(iPlug.get("JumpChart.Dialog.Size"));
+        sizeLabel = new JLabel(i18n.get("JumpChart.Dialog.Size"));
         gb.setPosition(0, 7);
         gb.setInsets(5, 10, 0, 5);
         gb.addComponent(sizeLabel);
 
-        uniformRB = new JRadioButton(iPlug.get("JumpChart.Dialog.Uniform"));
+        uniformRB = new JRadioButton(i18n.get("JumpChart.Dialog.Uniform"));
         gb.setPosition(1, 7);
         gb.setInsets(5, 0, 0, 0);
         gb.setAnchor(GridBagConstraints.WEST);
         gb.addComponent(uniformRB);
 
-        variableRB = new JRadioButton(iPlug.get("JumpChart.Dialog.Variable"));
+        variableRB = new JRadioButton(i18n.get("JumpChart.Dialog.Variable"));
         gb.setPosition(2, 7);
         gb.setInsets(5, 0, 0, 0);
         gb.setAnchor(GridBagConstraints.WEST);
         gb.addComponent(variableRB);
 
-        linearCB = new JCheckBox(iPlug.get("JumpChart.Dialog.Linear"));
+        linearCB = new JCheckBox(i18n.get("JumpChart.Dialog.Linear"));
         gb.setPosition(3, 7);
         gb.setInsets(5, 0, 0, 10);
         gb.setAnchor(GridBagConstraints.WEST);
@@ -243,18 +242,18 @@ public class ChartDialog extends JDialog implements ActionListener,
         uniformRB.setSelected(ChartParams.uniformSize);
         variableRB.setSelected(!ChartParams.uniformSize);
 
-        scaleLabel = new JLabel(iPlug.get("JumpChart.Dialog.Scale"));
+        scaleLabel = new JLabel(i18n.get("JumpChart.Dialog.Scale"));
         gb.setPosition(0, 8);
         gb.setInsets(5, 10, 0, 5);
         gb.addComponent(scaleLabel);
 
-        autoRB = new JRadioButton(iPlug.get("JumpChart.Dialog.Auto"));
+        autoRB = new JRadioButton(i18n.get("JumpChart.Dialog.Auto"));
         gb.setPosition(1, 8);
         gb.setInsets(5, 0, 0, 0);
         gb.setAnchor(GridBagConstraints.WEST);
         gb.addComponent(autoRB);
 
-        fixedRB = new JRadioButton(iPlug.get("JumpChart.Dialog.Fixed"));
+        fixedRB = new JRadioButton(i18n.get("JumpChart.Dialog.Fixed"));
         gb.setPosition(2, 8);
         gb.setInsets(5, 0, 0, 0);
         gb.setAnchor(GridBagConstraints.WEST);
@@ -272,7 +271,7 @@ public class ChartDialog extends JDialog implements ActionListener,
         gb.setInsets(5, 10, 0, 10);
         gb.addComponent(scaleField);
 
-        showScaleCB = new JCheckBox(iPlug.get("JumpChart.Dialog.ShowScale"));
+        showScaleCB = new JCheckBox(i18n.get("JumpChart.Dialog.ShowScale"));
         gb.setPosition(1, 9);
         gb.setInsets(5, 0, 0, 0);
         gb.setAnchor(GridBagConstraints.WEST);
@@ -280,20 +279,20 @@ public class ChartDialog extends JDialog implements ActionListener,
         showScaleCB.setSelected(ChartParams.showScale);
 
         showLocalScaleCB = new JCheckBox(
-                iPlug.get("JumpChart.Dialog.LocalScale"));
+            i18n.get("JumpChart.Dialog.LocalScale"));
         gb.setPosition(2, 9);
         gb.setInsets(5, 0, 0, 0);
         gb.setAnchor(GridBagConstraints.WEST);
         gb.addComponent(showLocalScaleCB);
         showLocalScaleCB.setSelected(ChartParams.localScale);
 
-        showLabelsCB = new JCheckBox(iPlug.get("JumpChart.Dialog.ShowLabels"));
+        showLabelsCB = new JCheckBox(i18n.get("JumpChart.Dialog.ShowLabels"));
         gb.setPosition(1, 10);
         gb.setInsets(5, 0, 0, 10);
         gb.addComponent(showLabelsCB);
         showLabelsCB.setSelected(ChartParams.showLabels);
 
-        widthLabel = new JLabel(iPlug.get("JumpChart.Dialog.Width"));
+        widthLabel = new JLabel(i18n.get("JumpChart.Dialog.Width"));
         gb.setPosition(2, 10);
         gb.setInsets(5, 10, 0, 5);
         gb.setAnchor(GridBagConstraints.EAST);
@@ -305,7 +304,7 @@ public class ChartDialog extends JDialog implements ActionListener,
         gb.setInsets(5, 10, 0, 10);
         gb.addComponent(widthField);
 
-        originLabel = new JLabel(iPlug.get("JumpChart.Dialog.Offsets"));
+        originLabel = new JLabel(i18n.get("JumpChart.Dialog.Offsets"));
         gb.setPosition(0, 11);
         gb.setInsets(5, 10, 0, 5);
         gb.setSpan(3, 1);
@@ -334,7 +333,7 @@ public class ChartDialog extends JDialog implements ActionListener,
         gb.addComponent(yorigField);
         yorigField.setText(String.valueOf(ChartParams.originY));
 
-        underLabel = new JLabel(iPlug.get("JumpChart.Dialog.UnderLabels"));
+        underLabel = new JLabel(i18n.get("JumpChart.Dialog.UnderLabels"));
         gb.setPosition(0, 13);
         gb.setInsets(5, 10, 0, 5);
         // gb.setAnchor(GridBagConstraints.EAST);
@@ -361,7 +360,7 @@ public class ChartDialog extends JDialog implements ActionListener,
         // gb.addComponent(cancelButton);
         // cancelButton.addActionListener(this);
 
-        aboutButton = new JButton(iPlug.get("JumpChart.Dialog.About"));
+        aboutButton = new JButton(i18n.get("JumpChart.Dialog.About"));
         gb.setPosition(3, 13);
         gb.setInsets(20, 10, 10, 0);
         gb.addComponent(aboutButton);
@@ -377,11 +376,7 @@ public class ChartDialog extends JDialog implements ActionListener,
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (okPanel.wasOKPressed()) {
-
                     okAction(e);
-
-                    return;
-
                 } else {
                     closeAction(e);
                 }
@@ -434,9 +429,7 @@ public class ChartDialog extends JDialog implements ActionListener,
     }
 
     private void clearOrder() {
-        for (int i = 0; i < ChartParams.attributeOrder.length; i++) {
-            ChartParams.attributeOrder[i] = -1;
-        }
+        Arrays.fill(ChartParams.attributeOrder, -1);
     }
 
     @Override
@@ -447,7 +440,6 @@ public class ChartDialog extends JDialog implements ActionListener,
                         .isSelected();
             }
             // System.out.println("i="+i+"  selected:"+ChartParams.includeAttribute[i]);
-
         }
         clearOrder();
     }
@@ -459,7 +451,7 @@ public class ChartDialog extends JDialog implements ActionListener,
     }
 
     public void okAction(ActionEvent ev) {
-        attributes = new Vector<ChartAttribute>(10, 2);
+        attributes = new Vector<>(10, 2);
         int numSelected = 0;
         for (int i = 0; i < selectAttribute.length; i++) {
             if (ChartParams.includeAttribute[i]) {
@@ -486,7 +478,7 @@ public class ChartDialog extends JDialog implements ActionListener,
         }
         if (attributes.size() <= 0) {
             JOptionPane.showMessageDialog(this,
-                    iPlug.get("JumpChart.message3"), "Error...",
+                i18n.get("JumpChart.message3"), "Error...",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -498,7 +490,7 @@ public class ChartDialog extends JDialog implements ActionListener,
             ChartParams.barWidth = Double.parseDouble(widthField.getText());
         } catch (final NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
-                    iPlug.get("JumpChart.message2"), "Error...",
+                i18n.get("JumpChart.message2"), "Error...",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -516,7 +508,7 @@ public class ChartDialog extends JDialog implements ActionListener,
             ChartParams.originY = Integer.parseInt(yorigField.getText());
         } catch (final NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
-                    iPlug.get("JumpChart.message4"), "Error...",
+                i18n.get("JumpChart.message4"), "Error...",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -557,7 +549,7 @@ public class ChartDialog extends JDialog implements ActionListener,
         }
 
         if (ev.getSource() == acceptButton) {
-            attributes = new Vector<ChartAttribute>(10, 2);
+            attributes = new Vector<>(10, 2);
             int numSelected = 0;
             for (int i = 0; i < selectAttribute.length; i++) {
                 if (ChartParams.includeAttribute[i]) {
@@ -585,7 +577,7 @@ public class ChartDialog extends JDialog implements ActionListener,
             }
             if (attributes.size() <= 0) {
                 JOptionPane.showMessageDialog(this,
-                        iPlug.get("JumpChart.message3"), "Error...",
+                    i18n.get("JumpChart.message3"), "Error...",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -598,7 +590,7 @@ public class ChartDialog extends JDialog implements ActionListener,
                 ChartParams.barWidth = Double.parseDouble(widthField.getText());
             } catch (final NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
-                        iPlug.get("JumpChart.message2"), "Error...",
+                    i18n.get("JumpChart.message2"), "Error...",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -616,7 +608,7 @@ public class ChartDialog extends JDialog implements ActionListener,
                 ChartParams.originY = Integer.parseInt(yorigField.getText());
             } catch (final NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
-                        iPlug.get("JumpChart.message4"), "Error...",
+                    i18n.get("JumpChart.message4"), "Error...",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -654,7 +646,7 @@ public class ChartDialog extends JDialog implements ActionListener,
 
         if (ev.getSource() == orderButton) {
             // System.out.println("Ordering");
-            final AttributeOrder attributeOder = new AttributeOrder(this, iPlug);
+            final AttributeOrder attributeOder = new AttributeOrder(this);
         }
 
     }

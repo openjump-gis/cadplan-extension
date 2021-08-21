@@ -43,7 +43,8 @@ import com.vividsolutions.jump.workbench.ui.plugin.AboutPlugIn;
  * User: geoff Date: 28/04/2007 Time: 09:40:22 Copyright 2007 Geoffrey G Roy.
  */
 public class FillPatternPlugIn extends AbstractPlugIn {
-    private final String version = "0.3 April 2018";
+
+    private final String version = "2.1.0 (2021-08-19)";
 
     public final static String NAME = "Fill Patterns";
 
@@ -107,20 +108,20 @@ public class FillPatternPlugIn extends AbstractPlugIn {
         jPanel_Help.setBorder(BorderFactory.createEtchedBorder());
 
         final JTextArea jTextArea_Help1 = new JTextArea();
-        jTextArea_Help1.setFont(new Font(fontName, 1, 18));
+        jTextArea_Help1.setFont(new Font(fontName, Font.BOLD, 18));
         jTextArea_Help1
                 .setText("JumpFillPattern Plugin (c)2007 Geoffrey G. Roy");
 
         final JTextArea jTextArea_Help2 = new JTextArea();
-        jTextArea_Help2.setFont(new Font(fontName, 0, 16));
+        jTextArea_Help2.setFont(new Font(fontName, Font.PLAIN, 16));
         jTextArea_Help2.setText("http://www.cadplan.com.au -  Version: "
                 + version);
 
         final JTextArea jTextArea_Help3 = new JTextArea();
-        jTextArea_Help3.setFont(new Font("Arial", 0, 14));
+        jTextArea_Help3.setFont(new Font("Arial", Font.PLAIN, 14));
         jTextArea_Help3.setText(text);
         final JPanel buttonPanel = new JPanel();
-        final JButton okButton = new JButton(I18N.get("ui.OKCancelPanel.ok"));
+        final JButton okButton = new JButton(I18N.JUMP.get("ui.OKCancelPanel.ok"));
 
         okButton.addActionListener(e -> jDialog.dispose());
 

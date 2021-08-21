@@ -21,6 +21,7 @@ import com.vividsolutions.jump.workbench.ui.renderer.style.BasicStyle;
 import com.vividsolutions.jump.workbench.ui.renderer.style.ColorThemingStyle;
 
 public class StarVertexStyle extends ExternalSymbolsType {
+
 	private BasicStroke stroke;
 	private int numSides = 4;
 	private boolean showLine = true;

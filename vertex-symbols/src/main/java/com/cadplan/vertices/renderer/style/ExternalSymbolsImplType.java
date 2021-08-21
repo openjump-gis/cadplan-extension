@@ -25,7 +25,8 @@ import com.vividsolutions.jump.workbench.ui.renderer.style.BasicStyle;
 import com.vividsolutions.jump.workbench.ui.renderer.style.ColorThemingStyle;
 import org.locationtech.jts.geom.*;
 
-public class ExternalSymbolsImplType extends com.cadplan.vertices.renderer.style.ExternalSymbolsType {
+public class ExternalSymbolsImplType extends ExternalSymbolsType {
+
 	boolean debug = false;
 	private BasicStroke stroke;
 	private int numSides = 4;

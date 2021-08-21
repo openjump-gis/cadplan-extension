@@ -41,7 +41,7 @@ public class PrinterExtension extends Extension
 
 	@Override
 	public String getVersion() {
-		return "2.0.0 (2021-04-17)";
+		return "2.1.0 (2021-08-19)";
 	}
 
 	@Override

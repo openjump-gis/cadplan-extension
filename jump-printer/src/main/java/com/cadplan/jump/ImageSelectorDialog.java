@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import com.cadplan.designer.GridBagDesigner;
+import com.vividsolutions.jump.I18N;
 
 public class ImageSelectorDialog extends JDialog implements ActionListener {
 
@@ -19,15 +20,15 @@ public class ImageSelectorDialog extends JDialog implements ActionListener {
   public int quality;
   public String type = "JPG";
   public boolean cancelled = false;
-  private final I18NPlug iPlug;
   public double svgFactor = 1.0;
+  private I18N i18n;
 
 
-  public ImageSelectorDialog(int xSize, int ySize, I18NPlug iPlug) {
-    super(new JFrame(), iPlug.get("JumpPrinter.Image.Dialog"), true);
+  public ImageSelectorDialog(int xSize, int ySize, I18N i18n) {
+    super(new JFrame(), i18n.get("JumpPrinter.Image.Dialog"), true);
     this.xSize = xSize;
     this.ySize = ySize;
-    this.iPlug = iPlug;
+    this.i18n = i18n;
 
     init();
   }
@@ -36,7 +37,7 @@ public class ImageSelectorDialog extends JDialog implements ActionListener {
   public void init() {
     GridBagDesigner gb = new GridBagDesigner(this);
 
-    typeLabel = new JLabel(iPlug.get("JumpPrinter.Image.ImageType"));
+    typeLabel = new JLabel(i18n.get("JumpPrinter.Image.ImageType"));
     gb.setPosition(0, 0);
     gb.setInsets(10, 10, 0, 0);
     gb.setSpan(3, 1);
@@ -51,7 +52,7 @@ public class ImageSelectorDialog extends JDialog implements ActionListener {
     gb.addComponent(typeCombo);
     typeCombo.addActionListener(this);
 
-    sizeLabel = new JLabel(iPlug.get("JumpPrinter.Image.Size"));
+    sizeLabel = new JLabel(i18n.get("JumpPrinter.Image.Size"));
     gb.setPosition(0, 1);
     gb.setInsets(10, 10, 0, 0);
     gb.setSpan(1, 1);
@@ -78,14 +79,14 @@ public class ImageSelectorDialog extends JDialog implements ActionListener {
     gb.addComponent(yField);
     yField.addActionListener(this);
 
-    aspectCB = new JCheckBox(iPlug.get("JumpPrinter.Image.KeepAspectRatio"));
+    aspectCB = new JCheckBox(i18n.get("JumpPrinter.Image.KeepAspectRatio"));
     gb.setPosition(1, 2);
     gb.setInsets(10, 10, 0, 10);
     gb.setSpan(3, 1);
     gb.setAnchor(GridBagConstraints.WEST);
     gb.addComponent(aspectCB);
 
-    qualityLabel = new JLabel(iPlug.get("JumpPrinter.Image.JPEGQuality"));
+    qualityLabel = new JLabel(i18n.get("JumpPrinter.Image.JPEGQuality"));
     gb.setPosition(0, 3);
     gb.setInsets(10, 10, 0, 0);
     gb.setSpan(3, 1);
@@ -121,14 +122,14 @@ public class ImageSelectorDialog extends JDialog implements ActionListener {
     svgField.setEnabled(false);
 
 
-    cancelButton = new JButton(iPlug.get("JumpPrinter.Setup.Cancel"));
+    cancelButton = new JButton(i18n.get("JumpPrinter.Setup.Cancel"));
     gb.setPosition(0, 6);
     gb.setInsets(10, 10, 10, 0);
     gb.setSpan(1, 1);
     gb.addComponent(cancelButton);
     cancelButton.addActionListener(this);
 
-    okButton = new JButton(iPlug.get("JumpPrinter.Setup.OK"));
+    okButton = new JButton(i18n.get("JumpPrinter.Setup.OK"));
     gb.setPosition(3, 6);
     gb.setInsets(10, 10, 10, 10);
     gb.setSpan(1, 1);

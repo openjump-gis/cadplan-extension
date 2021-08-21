@@ -115,11 +115,11 @@ public class ColumnChart
                 double dx = x - barWidth/2;
                 if(ChartParams.uniformSize)
                 {
-                    barHeightRatio = 1.0*maxHeight;
+                    barHeightRatio = 1.0 * maxHeight;
                 }
                 else
                 {
-                    barHeightRatio = maxHeight*sumItem[i]/sumMax;
+                    barHeightRatio = maxHeight * sumItem[i] / sumMax;
                 }
                maxValue = sumMax;
                maxSize =  maxHeight;
@@ -242,8 +242,8 @@ public class ColumnChart
        
        private void createLocalScale(FeatureCollection dataset, double x, double y, double interval, double scale, double maxValue)
        {
-       	//boolean debug = true;
-       	FeatureSchema featureSchema = new FeatureSchema();
+       	   //boolean debug = true;
+       	   FeatureSchema featureSchema = new FeatureSchema();
            featureSchema.addAttribute("Geometry", AttributeType.GEOMETRY);
            featureSchema.addAttribute("dValue", AttributeType.DOUBLE);
            featureSchema.addAttribute("iValue", AttributeType.INTEGER);

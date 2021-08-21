@@ -26,6 +26,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.feature.AttributeType;
 import com.vividsolutions.jump.feature.BasicFeature;
 import com.vividsolutions.jump.feature.Feature;
@@ -55,13 +56,13 @@ public class Chart {
     ChartAttribute[] chartAttributes;
     FeatureDataset dataset;
     double screenScale;
-    I18NPlug iPlug;
+    I18N i18n;
 
-    public Chart(PlugInContext context, I18NPlug iPlug) {
+    public Chart(PlugInContext context, I18N i18n) {
         this.context = context;
-        this.iPlug = iPlug;
+        this.i18n = i18n;
         ChartParams.cancelled = false;
-        chartData = new ChartData(context, iPlug);
+        chartData = new ChartData(context, i18n);
 
         if (!ChartParams.cancelled) {
 
@@ -70,7 +71,6 @@ public class Chart {
             for (final ChartValues chartValue : chartValues) {
                 // System.out.println("Att i="+i+ "  value="+
                 // chartValues[i].toString());
-
             }
 
             createContext();
@@ -94,9 +94,9 @@ public class Chart {
             layer.removeStyle(layer.getLabelStyle());
             layer.addStyle(newLabelStyle);
 
-            final Map<Object, BasicStyle> themeMap = new HashMap<Object, BasicStyle>();
-            ;
-            final Map<Object, String> labelMap = new HashMap<Object, String>();
+            final Map<Object, BasicStyle> themeMap = new HashMap<>();
+
+            final Map<Object, String> labelMap = new HashMap<>();
 
             final int numElements = chartAttributes.length;
 
@@ -473,9 +473,9 @@ public class Chart {
             pointArray[2] = new Coordinate(x + w, y + h);
             pointArray[3] = new Coordinate(x, y + h);
             pointArray[4] = new Coordinate(x, y);
-            for (final Coordinate element : pointArray) {
+            //for (final Coordinate element : pointArray) {
                 // System.out.println("Point "+j+":"+pointArray[j]);
-            }
+            //}
 
             final LinearRing lr = new GeometryFactory()
                     .createLinearRing(pointArray);
@@ -543,7 +543,7 @@ public class Chart {
             final Feature labelFeature = new BasicFeature(featureSchema);
             labelFeature.setGeometry(labelGeometry);
             labelFeature.setAttribute("Name",
-                    iPlug.get("JumpChart.Legend.ChartType"));
+                    i18n.get("JumpChart.Legend.ChartType"));
             labelFeature.setAttribute("dValue", -1.0);
             labelFeature.setAttribute("iValue", -1);
             labelFeature.setAttribute("Index", -1);
@@ -554,7 +554,6 @@ public class Chart {
 
     private String format(double val) {
         return NumberFormatter.format(val);
-
     }
 
 }

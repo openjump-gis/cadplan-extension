@@ -6,7 +6,6 @@ import com.cadplan.jump.ui.VectorPanel;
 import com.cadplan.jump.ui.WKTPanel;
 import com.cadplan.jump.utils.AttributeManagerUtils;
 import com.cadplan.jump.utils.VertexParams;
-import com.cadplan.language.I18NPlug;
 import com.cadplan.vertices.renderer.style.ExternalSymbolsImplType;
 import com.cadplan.vertices.renderer.style.ExternalSymbolsType;
 import com.vividsolutions.jump.I18N;
@@ -28,8 +27,13 @@ import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Iterator;
 
+
 public class VertexNoteDialog extends JDialog implements ActionListener, ChangeListener {
+
   private static final long serialVersionUID = 1L;
+
+  private static final I18N i18n = I18N.getInstance("com.cadplan");
+
   boolean debug = false;
   PlugInContext context;
   JCheckBox showLabelCB;
@@ -64,20 +68,22 @@ public class VertexNoteDialog extends JDialog implements ActionListener, ChangeL
   AttributeManagerUtils manager = new AttributeManagerUtils();
 
   public VertexNoteDialog(PlugInContext context) {
-    super(new JFrame(), I18NPlug.getI18N("VertexNote.Dialog.Editor"), true);
+    super(new JFrame(), i18n.get("VertexNote.Dialog.Editor"), true);
     this.context = context;
     this.layers = context.getSelectedLayers();
     if (layers != null && layers.length == 1) {
       if (ColorThemingStyle.get(this.layers[0]).isEnabled()) {
-        JOptionPane.showMessageDialog(null, I18NPlug.getI18N("VertexNote.Dialog.Message8"),
-            I18N.get("ui.WorkbenchFrame.warning"), JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+            i18n.get("VertexNote.Dialog.Message8"),
+            I18N.JUMP.get("ui.WorkbenchFrame.warning"), JOptionPane.WARNING_MESSAGE);
         return;
       }
 
       boolean isEditable = this.layers[0].isEditable();
       if (!isEditable) {
-        JOptionPane.showMessageDialog(null, I18NPlug.getI18N("VertexNote.Dialog.Message3"),
-            I18N.get("ui.WorkbenchFrame.warning"), JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+            i18n.get("VertexNote.Dialog.Message3"),
+            I18N.JUMP.get("ui.WorkbenchFrame.warning"), JOptionPane.WARNING_MESSAGE);
         return;
       } else {
         this.vertexStyle = this.layers[0].getVertexStyle();
@@ -89,15 +95,17 @@ public class VertexNoteDialog extends JDialog implements ActionListener, ChangeL
           try {
             textAttributeName = ((ExternalSymbolsType) this.vertexStyle).getTextAttributeName();
           } catch (ClassCastException var9) {
-            JOptionPane.showMessageDialog(null, I18NPlug.getI18N("VertexNote.Dialog.Message4"),
-                I18N.get("ui.WorkbenchFrame.warning"), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, i18n.get("VertexNote.Dialog.Message4"),
+                I18N.JUMP.get("ui.WorkbenchFrame.warning"), JOptionPane.WARNING_MESSAGE);
             return;
           }
 
           this.selectedFeature = this.getSelectedPoint();
           if (this.selectedFeature == null) {
-            JOptionPane.showMessageDialog(null, I18NPlug.getI18N("VertexNote.Dialog.Message1"),
-                I18N.get("ui.WorkbenchFrame.warning"), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                i18n.get("VertexNote.Dialog.Message1"),
+                I18N.JUMP.get("ui.WorkbenchFrame.warning"),
+                JOptionPane.WARNING_MESSAGE);
             return;
           }
 
@@ -166,7 +174,7 @@ public class VertexNoteDialog extends JDialog implements ActionListener, ChangeL
       }
     } else {
       JOptionPane.showMessageDialog(null,
-          I18NPlug.getI18N("VertexNote.Dialog.Message2"), "Warning...",
+          i18n.get("VertexNote.Dialog.Message2"), "Warning...",
           JOptionPane.WARNING_MESSAGE);
     }
 
@@ -177,7 +185,7 @@ public class VertexNoteDialog extends JDialog implements ActionListener, ChangeL
     ToolTipManager ttm = ToolTipManager.sharedInstance();
     ttm.setLightWeightPopupEnabled(false);
     GridBagDesigner gb = new GridBagDesigner(this);
-    this.showLabelCB = new JCheckBox(I18NPlug.getI18N("VertexNote.Dialog.ShowLabel"));
+    this.showLabelCB = new JCheckBox(i18n.get("VertexNote.Dialog.ShowLabel"));
     gb.setPosition(0, 0);
     gb.setInsets(10, 10, 0, 0);
     gb.addComponent(this.showLabelCB);
@@ -190,7 +198,7 @@ public class VertexNoteDialog extends JDialog implements ActionListener, ChangeL
     gb.addComponent(this.textArea);
     this.textArea.setText(this.textValue);
     this.textArea.setEditable(this.allowEdit);
-    JLabel vertexLabel = new JLabel(I18NPlug.getI18N("VertexNote.Dialog.SelectSymbol"));
+    JLabel vertexLabel = new JLabel(i18n.get("VertexNote.Dialog.SelectSymbol"));
     gb.setPosition(0, 1);
     gb.setInsets(10, 10, 10, 0);
     gb.setAnchor(11);
@@ -200,39 +208,39 @@ public class VertexNoteDialog extends JDialog implements ActionListener, ChangeL
     this.tabbedPane.addChangeListener(this);
     this.vectorPanel = new VectorPanel(this.group, VertexParams.selectedLayer.getBasicStyle().getLineColor(), VertexParams.selectedLayer.getBasicStyle().getFillColor());
     this.vectorPanel.setBackground(Color.WHITE);
-    this.tabbedPane.addTab(I18NPlug.getI18N("VertexSymbols.Dialog.Vector"), this.vectorPanel);
+    this.tabbedPane.addTab(i18n.get("VertexSymbols.Dialog.Vector"), this.vectorPanel);
     this.wktPanel = new WKTPanel(this.group, VertexParams.selectedLayer.getBasicStyle().getLineColor(), VertexParams.selectedLayer.getBasicStyle().getFillColor());
     this.wktPanel.setBackground(Color.WHITE);
     this.scrollPane2 = new JScrollPane(this.wktPanel);
     this.scrollPane2.setPreferredSize(new Dimension(400, 300));
-    this.tabbedPane.addTab(I18NPlug.getI18N("VertexSymbols.Dialog.WKTshapes"), this.scrollPane2);
+    this.tabbedPane.addTab(i18n.get("VertexSymbols.Dialog.WKTshapes"), this.scrollPane2);
     this.imagePanel = new ImagePanel(this.group);
     this.imagePanel.setBackground(Color.WHITE);
     this.scrollPane = new JScrollPane(this.imagePanel);
     this.scrollPane.setPreferredSize(new Dimension(400, 300));
-    this.tabbedPane.addTab(I18NPlug.getI18N("VertexSymbols.Dialog.Image"), this.scrollPane);
+    this.tabbedPane.addTab(i18n.get("VertexSymbols.Dialog.Image"), this.scrollPane);
     gb.setPosition(1, 1);
     gb.setFill(1);
     gb.setInsets(10, 0, 10, 10);
     gb.addComponent(this.tabbedPane);
     JPanel bottomPanel = new JPanel();
     GridBagDesigner gbb = new GridBagDesigner(bottomPanel);
-    this.cancelButton = new JButton(I18NPlug.getI18N("VertexSymbols.Dialog.Cancel"));
+    this.cancelButton = new JButton(i18n.get("VertexSymbols.Dialog.Cancel"));
     gbb.setPosition(0, 0);
     gbb.setInsets(10, 10, 10, 0);
     gbb.addComponent(this.cancelButton);
     this.cancelButton.addActionListener(this);
-    this.clearButton = new JButton(I18NPlug.getI18N("VertexSymbols.Dialog.Clear"));
+    this.clearButton = new JButton(i18n.get("VertexSymbols.Dialog.Clear"));
     gbb.setPosition(1, 0);
     gbb.setInsets(10, 10, 10, 0);
     gbb.addComponent(this.clearButton);
     this.clearButton.addActionListener(this);
-    this.resetButton = new JButton(I18NPlug.getI18N("VertexSymbols.Dialog.Reset"));
+    this.resetButton = new JButton(i18n.get("VertexSymbols.Dialog.Reset"));
     gbb.setPosition(2, 0);
     gbb.setInsets(10, 10, 10, 10);
     gbb.addComponent(this.resetButton);
     this.resetButton.addActionListener(this);
-    this.acceptButton = new JButton(I18NPlug.getI18N("VertexSymbols.Dialog.Accept"));
+    this.acceptButton = new JButton(i18n.get("VertexSymbols.Dialog.Accept"));
     gbb.setPosition(3, 0);
     gbb.setInsets(10, 10, 10, 10);
     gbb.setAnchor(13);
@@ -404,7 +412,7 @@ public class VertexNoteDialog extends JDialog implements ActionListener, ChangeL
         this.selectedFeature.setAttribute("SymbolName", this.symbolName);
       } catch (IllegalArgumentException var8) {
         JOptionPane.showMessageDialog(null,
-            I18NPlug.getI18N("VertexNote.Dialog.Message3"),
+            i18n.get("VertexNote.Dialog.Message3"),
             "Warning...", JOptionPane.WARNING_MESSAGE);
       }
 
@@ -422,7 +430,7 @@ public class VertexNoteDialog extends JDialog implements ActionListener, ChangeL
 
     if (ev.getSource() == this.resetButton) {
       int response = JOptionPane.showConfirmDialog(this,
-          I18NPlug.getI18N("VertexSymbols.Dialog.Warning5"),
+          i18n.get("VertexSymbols.Dialog.Warning5"),
           "Warning...", JOptionPane.OK_CANCEL_OPTION);
       if (response == 2) {
         return;
